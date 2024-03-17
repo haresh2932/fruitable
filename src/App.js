@@ -1,17 +1,16 @@
 import React from 'react';
-import Header from './user/component/Header/Header';
-import Home from './user/container/Home/Home';
-
-import Footer from './user/component/Footer/Footer';
+import { Route, Routes } from 'react-router-dom';
+import UserRoutes from './routes/UserRoutes';
+import AdminRoutes from './routes/AdminRoutes';
 
 
 function App() {
   return (
-    <>
-      <Header/>
-      <Home/>
-      <Footer/>
-    </>   
+    <Routes>
+    <Route exact path='/*' element={<UserRoutes />} />
+    <Route exact path='/admin*' element={<AdminRoutes />} />
+
+</Routes> 
   );
 }
 
