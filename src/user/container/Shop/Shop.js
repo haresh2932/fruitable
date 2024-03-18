@@ -336,7 +336,7 @@ function Shop(props) {
                                                 <a href="#" className="active rounded">1</a>
                                                 <a href="#" className="rounded">2</a>
                                                 <a href="#" className="rounded">3</a>
-                                                <a href="#" className="rounded">4</a>
+                                      ``          <a href="#" className="rounded">4</a>
                                                 <a href="#" className="rounded">5</a>
                                                 <a href="#" className="rounded">6</a>
                                                 <a href="#" className="rounded">»</a>
