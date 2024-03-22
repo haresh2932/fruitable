@@ -20,6 +20,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import AppleIcon from '@mui/icons-material/Apple';
 import KebabDiningIcon from '@mui/icons-material/KebabDining';
+import CategoryIcon from '@mui/icons-material/Category';
 import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -102,6 +103,11 @@ export default function Layout({ children }) {
     };
 
     const applink = [
+        {
+            title: 'category',
+            icon: <CategoryIcon />,
+            to: '/admin/category'
+        },
         {
             title: 'Fruite',
             icon: <AppleIcon />,

@@ -1,6 +1,30 @@
 import React from 'react';
+import { object, string, number, date, InferType } from 'yup';
+import { useFormik } from 'formik';
 
 function Contact(props) {
+    let contactSchema = object({
+        name: string().required(),
+        email: string().required().email(),
+        message: string().required().min(10, "Please atleast 10 latters")
+    });
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            message: '',
+        },
+
+        validationSchema: contactSchema,
+
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    })
+
+    const {handleBlur,handleChange,handleSubmit,values,errors,touched}=formik
+
+
     return (
         <div>
             {/* Single Page Header start */}
@@ -30,11 +54,49 @@ function Contact(props) {
                                 </div>
                             </div>
                             <div className="col-lg-7">
-                                <form action className>
-                                    <input type="text" className="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name" />
-                                    <input type="email" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" />
-                                    <textarea className="w-100 form-control border-0 mb-4" rows={5} cols={10} placeholder="Your Message" defaultValue={""} />
-                                    <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit">Submit</button>
+                                <form onSubmit={handleSubmit}>
+                                    <input
+                                        name='name'
+                                        type="text"
+                                        className="w-100 form-control border-0 py-3 "
+                                        placeholder="Your Name"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                    />
+                                    <span className='error' >
+                                      {touched.name && errors.name?errors.name:''}                                          
+                                    </span>
+                                    <input
+                                        name='email'
+                                        type="email"
+                                        className="w-100 form-control border-0 py-3 "
+                                        placeholder="Enter Your Email"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.email}
+                                    />
+                                    <span className='error' >
+                                      {touched.email && errors.email?errors.email:''}                                          
+                                    </span>
+                                    <textarea
+                                        name='message'
+                                        className="w-100 form-control border-0 "
+                                        rows={5} cols={10}
+                                        placeholder="Your Message"
+                                        defaultValue={""}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.message}
+                                    />
+                                    <span className='error' >
+                                      {touched.message && errors.message?errors.message:''}                                          
+                                    </span>
+                                    <button
+                                        className="w-100 btn form-control border-secondary py-3 bg-white text-primary "
+                                        type="submit">
+                                        Submit
+                                    </button>
                                 </form>
                             </div>
                             <div className="col-lg-5">

@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from '../admin/component/Layout/Layout';
 import Fruites from '../admin/container/Fruites/Fruites';
 import Vegitables from '../admin/container/Vegitables/Vegitables';
+import Category from '../admin/container/Category/Category';
 
 function AdminRoutes(props) {
     return (
@@ -11,7 +12,7 @@ function AdminRoutes(props) {
             <Routes>
                 <Route exact path='/fruites' element={<Fruites/>} />
                 <Route exact path='/vegitables' element={<Vegitables />} />
-
+                <Route exact path='/category' element={<Category />} />
             </Routes>
         </Layout>
     );

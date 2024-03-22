@@ -3,6 +3,7 @@
         {
             "id": 1,
             "image": "img/fruite-item-5.jpg",
+            "category":"Fruite",
             "name": "Grapes",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -11,6 +12,7 @@
         {
             "id": 2,
             "image": "img/fruite-item-5.jpg",
+            "category":"Fruite",
             "name": "Grapes",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -19,6 +21,7 @@
         {
             "id": 3,
             "image": "img/fruite-item-2.jpg",
+            "category":"Fruite",
             "name": "Raspberries",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -27,6 +30,7 @@
         {
             "id": 4,
             "image": "img/fruite-item-4.jpg",
+            "category":"Fruite",
             "name": "Apricots",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -35,6 +39,7 @@
         {
             "id": 5,
             "image": "img/fruite-item-3.jpg",
+            "category":"Fruite",
             "name": "Banana",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -43,6 +48,7 @@
         {
             "id": 6,
             "image": "img/fruite-item-1.jpg",
+            "category":"Fruite",
             "name": "Oranges",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -51,6 +57,7 @@
         {
             "id": 7,
             "image": "img/fruite-item-2.jpg",
+            "category":"Fruite",
             "name": "Raspberries",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -59,6 +66,7 @@
         {
             "id": 8,
             "image": "img/fruite-item-5.jpg",
+            "category":"Fruite",
             "name": "Grapes",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
@@ -67,6 +75,7 @@
         {
             "id": 9,
             "image": "img/fruite-item-1.jpg",
+            "category":"Fruite",
             "name": "Oranges",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
