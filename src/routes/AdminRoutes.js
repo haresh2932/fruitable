@@ -13,6 +13,7 @@ function AdminRoutes(props) {
                 <Route exact path='/fruites' element={<Fruites/>} />
                 <Route exact path='/vegitables' element={<Vegitables />} />
                 <Route exact path='/category' element={<Category />} />
+                
             </Routes>
         </Layout>
     );

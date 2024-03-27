@@ -11,6 +11,7 @@ import Testimonial from '../user/container/Testimonial/Testimonial';
 import Error from '../user/container/404/Error';
 import Contact from '../user/container/Contact/Contact';
 import PrivateRoutes from './PrivateRoutes';
+import Counter from '../user/container/Counter/Counter';
 
 function UserRoutes(props) {
     return (
@@ -27,6 +28,8 @@ function UserRoutes(props) {
                 <Route exact path='/testimonial' element={<Testimonial />} />
                 <Route exact path='/error' element={<Error />} />
                 <Route exact path='/contact' element={<Contact />} />
+                <Route exact path='/counter' element={<Counter/>} />
+
             </Routes>
             <Footer />
         </>

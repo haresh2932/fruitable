@@ -12,12 +12,15 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { IconButton } from '@mui/material';
+
 
 
 
 export default function Category() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
+    const [edit, setEdit] = React.useState(null)
 
     const handleDelete = (data) => {
         console.log('626', data.id);
@@ -31,33 +34,44 @@ export default function Category() {
     }
 
     const handleEdit = (data) => {
-        handleClickOpen()
-        const editEL = JSON.parse(localStorage.getItem('category'));
-        const newElm = editEL.filter((v) => v.id !== data.id);
-        console.log(newElm);
-        setData(newElm)
-        //    console.log(TextField.name); 
+        console.log(data);
+        formik.setValues(data)    
+        setEdit(data.id)
+        setOpen(true);
+
 
     }
+
     const columns = [
-        { field: "category_name", headerName: "Name", width: 130 },
-        { field: "category_description", headerName: "Description", width: 130 },
         {
-            field: "Action", headerName: "Action",
+            field: "category_name",
+            headerName: "Name",
+            width: 130
+        },
+        {
+            field: "category_description",
+            headerName: "Description",
+            width: 200,
+        },
+        {
+            field: "Action",
+            headerName: "Action",
+            width: 200,
             renderCell: ({ row }) => (
                 <>
-                    <Button
+                    <IconButton
                         onClick={(event) => handleEdit(row)}
                         variant="contained"
                     >
                         <EditIcon />
-                    </Button>
-                    <Button
+                    </IconButton>
+
+                    <IconButton
                         onClick={(event) => handleDelete(row)}
                         variant="contained"
                     >
                         <DeleteIcon />
-                    </Button>
+                    </IconButton>
                 </>
             )
         }
@@ -87,14 +101,24 @@ export default function Category() {
         console.log(data);
         const localdata = JSON.parse(localStorage.getItem('category'))
 
+      
+
         if (localdata) {
             localdata.push({ ...data, id: rId })
             localStorage.setItem('category', JSON.stringify(localdata))
         } else {
-            localStorage.setItem('category', JSON.stringify([{ ...data, id: 'rId' }]))
+            localStorage.setItem('category', JSON.stringify([{ ...data, id: rId }]))
         }
         getData()
 
+    }
+
+    const handleUpdateData=(data)=>{
+        const localdata = JSON.parse(localStorage.getItem('category'))
+        const index=localdata.findIndex((v)=>v.id===data.id)
+        localdata[index]=data
+        localStorage.setItem('category', JSON.stringify(localdata))
+        getData()
     }
 
     const formik = useFormik({
@@ -104,9 +128,13 @@ export default function Category() {
         },
         validationSchema: categorySchema,
         onSubmit: (values, { resetForm }) => {
-            handleAdd(values);
-            resetForm();
-            handleClose();
+            if (edit) {
+                handleUpdateData(values)
+            } else {
+                handleAdd(values);                
+            }
+                resetForm();
+                handleClose();
         },
 
     });
@@ -119,6 +147,8 @@ export default function Category() {
 
     const handleClose = () => {
         setOpen(false);
+        formik.resetForm();
+        setEdit(null)
     };
 
     return (
@@ -133,7 +163,6 @@ export default function Category() {
                 <form onSubmit={handleSubmit}>
                     <DialogTitle>Category</DialogTitle>
                     <DialogContent>
-
                         <TextField
                             margin="dense"
                             id="category_name"
@@ -165,7 +194,7 @@ export default function Category() {
                         />
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">Add</Button>
+                            <Button type="submit">{edit?'Update':'Add'}</Button>
                         </DialogActions>
 
                     </DialogContent>
