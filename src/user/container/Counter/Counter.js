@@ -4,7 +4,7 @@ import { decreament, increament } from '../../../redux/Action/counter.action';
 
 function Counter(props) {
     const countVal=useSelector(state=>state.counter)
-    console.log(countVal);
+    console.log(countVal); 
 
     const dispatch = useDispatch()
 

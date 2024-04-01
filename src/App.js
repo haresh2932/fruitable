@@ -11,13 +11,13 @@ function App() {
   const store=configStore()
   return (
     <Provider store={store}>
-      {/* <Routes>
+      <Routes>
         <Route exact path='/*' element={<UserRoutes />} />
         <Route element={<PrivateRoutes />}>
           <Route exact path='/admin*' element={<AdminRoutes />} />
         </Route>
-      </Routes> */}
-      <Counter/>
+      </Routes>
+      {/* <Counter/> */}
     </Provider>
   );
 }

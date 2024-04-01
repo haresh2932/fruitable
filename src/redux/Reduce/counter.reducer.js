@@ -3,7 +3,7 @@ import { DECREAMENT_COUNTER, INCREAMENT_COUNTER } from "../ActionType";
 const intialState = {
     isLoding: false,
     count: 0,
-    error: null
+    error: null 
 }
 
 export const counterReducer = (state = intialState, action) => {

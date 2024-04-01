@@ -22,6 +22,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import KebabDiningIcon from '@mui/icons-material/KebabDining';
 import CategoryIcon from '@mui/icons-material/Category';
 import { NavLink } from 'react-router-dom';
+import StreamIcon from '@mui/icons-material/Stream';
 
 const drawerWidth = 240;
 
@@ -117,8 +118,12 @@ export default function Layout({ children }) {
             title: 'Vegitables',
             icon: <KebabDiningIcon />,
             to: '/admin/vegitables'
+        },
+        {
+            title: 'Facilities',
+            icon: <StreamIcon />,
+            to: '/admin/facilities'
         }
-
     ]
 
     return (
