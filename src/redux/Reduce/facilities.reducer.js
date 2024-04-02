@@ -1,4 +1,4 @@
-import { FACILITIES_DATA } from "../ActionType";
+import { EDIT_DATA, FACILITIES_DATA, REMOVE_DATA } from "../ActionType";
 
 const intialState = {
     isLoding: false,
@@ -11,13 +11,24 @@ export const facilitiesReducer = (state = intialState, action) => {
     console.log(action);
 
     switch (action.type) {
-        case FACILITIES_DATA :
+        case FACILITIES_DATA:
             return {
-                facilities :state.facilities.concat(action.payload),
+                ...state,
+                facilities: state.facilities.concat(action.payload),
             }
-
+        case REMOVE_DATA:
+            return {
+                ...state,
+                facilities: state.facilities.filter((v) => v.id !== action.payload)
+            }
+        case EDIT_DATA:
+            return {
+                ...state,
+                facilities: state.facilities.map((v) => v.id === action.payload.id?{...v, ...action.payload.newdata}:v)
+            }
         default:
             return state;
     }
+    
 
 }

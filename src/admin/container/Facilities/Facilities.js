@@ -9,13 +9,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
 import { object, string, number, date, InferType } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addfacilities } from '../../../redux/Action/facilities.action';
+import { addfacilities, editFacility, removeFacility } from '../../../redux/Action/facilities.action';
+import { DataGrid } from '@mui/x-data-grid';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 
 function Facilities(props) {
     const [open, setOpen] = React.useState(false);
-    const dispatch=useDispatch()
-    const facilities=useSelector(state=>state.facilities)
+    const dispatch = useDispatch()
+    const facilities = useSelector(state => state.facilities)
+    console.log(facilities.facilities);
+    const [edit, setEdit] = React.useState(null)
+
 
 
     const handleClickOpen = () => {
@@ -38,12 +46,70 @@ function Facilities(props) {
             discription: '',
         },
         validationSchema: facilitiesSchema,
-        onSubmit: values => {
-            dispatch(addfacilities(values))
+        onSubmit: (values, { resetForm }) => {
+            if (edit) {
+                console.log("yes",edit);
+                dispatch(editFacility(edit, values))
+            } else {
+                const rNo = Math.floor((Math.random() * 1000))
+                dispatch(addfacilities({ ...values,id: rNo }))
+            }
+            resetForm()
+            handleClose();
+
         },
     });
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors } = formik
+
+    const handleEdit = (data) => {
+        console.log(data);
+        formik.setValues(data)
+        setEdit(data.id)
+        setOpen(true);
+        // dispatch(editFacility(id));
+
+
+    }
+    const handleDelete = (id) => {
+        console.log(id);
+        dispatch(removeFacility(id));
+    }
+    const columns = [
+        // { field: 'id', headerName: 'ID', width: 70 },
+        {
+            field: 'name',
+            headerName: 'Name',
+            width: 130
+        },
+        {
+            field: 'discription',
+            headerName: 'Discription',
+            width: 130
+        },
+        {
+            field: "Action",
+            headerName: "Action",
+            width: 200,
+            renderCell: ({ row }) => (
+                <>
+                    <IconButton
+                        onClick={(event) => handleEdit(row)}
+                        variant="contained"
+                    >
+                        <EditIcon />
+                    </IconButton>
+
+                    <IconButton
+                        onClick={() => handleDelete(row.id)}
+                        variant="contained"
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
+    ];
 
 
     return (
@@ -70,7 +136,7 @@ function Facilities(props) {
                             onBlur={handleBlur}
                             value={values.name}
                             error={touched.name && errors.name ? true : false}
-                            helperText={touched.name && errors.name ? errors.name : ''}                   
+                            helperText={touched.name && errors.name ? errors.name : ''}
                         />
                         <TextField
                             margin="dense"
@@ -85,15 +151,28 @@ function Facilities(props) {
                             value={values.discription}
                             error={touched.discription && errors.discription ? true : false}
                             helperText={touched.discription && errors.discription ? errors.discription : ''}
-                       
+
                         />
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">Add</Button>
+                            <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
                         </DialogActions>
                     </DialogContent>
                 </form>
             </Dialog>
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={facilities.facilities}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                />
+            </div>
 
         </>
     );
