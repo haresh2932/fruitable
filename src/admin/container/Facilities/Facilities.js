@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -14,6 +14,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Spinner } from 'reactstrap';
+import { ClimbingBoxLoader } from 'react-spinners';
+
+
 
 
 
@@ -22,9 +27,8 @@ function Facilities(props) {
     const dispatch = useDispatch()
     const facilities = useSelector(state => state.facilities)
     console.log(facilities.facilities);
-    const [edit, setEdit] = React.useState(null)
-
-
+    const [edit, setEdit] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -32,13 +36,14 @@ function Facilities(props) {
 
     const handleClose = () => {
         setOpen(false);
+        formik.resetForm();
+        setEdit(false)
     };
 
     let facilitiesSchema = object({
         name: string().required(),
         discription: string().required(),
     });
-
 
     const formik = useFormik({
         initialValues: {
@@ -48,15 +53,15 @@ function Facilities(props) {
         validationSchema: facilitiesSchema,
         onSubmit: (values, { resetForm }) => {
             if (edit) {
-                console.log("yes",edit);
-                dispatch(editFacility(edit, values))
+                // console.log("yes",values);
+                dispatch(editFacility(values))
             } else {
                 const rNo = Math.floor((Math.random() * 1000))
-                dispatch(addfacilities({ ...values,id: rNo }))
+                dispatch(addfacilities({ ...values, id: rNo }))
             }
+            
             resetForm()
             handleClose();
-
         },
     });
 
@@ -65,16 +70,15 @@ function Facilities(props) {
     const handleEdit = (data) => {
         console.log(data);
         formik.setValues(data)
-        setEdit(data.id)
+        setEdit(true)
         setOpen(true);
-        // dispatch(editFacility(id));
-
-
     }
+
     const handleDelete = (id) => {
         console.log(id);
         dispatch(removeFacility(id));
     }
+
     const columns = [
         // { field: 'id', headerName: 'ID', width: 70 },
         {
@@ -114,66 +118,73 @@ function Facilities(props) {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Add Facilities
-            </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-            >
-                <form onSubmit={handleSubmit}>
-                    <DialogTitle>Facilities</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            margin="dense"
-                            id="name"
-                            name="name"
-                            label="Facilities Name"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.name}
-                            error={touched.name && errors.name ? true : false}
-                            helperText={touched.name && errors.name ? errors.name : ''}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="discription"
-                            name="discription"
-                            label="Facilities discription"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.discription}
-                            error={touched.discription && errors.discription ? true : false}
-                            helperText={touched.discription && errors.discription ? errors.discription : ''}
+            {
+                facilities.isLoading? 
+                    <ClimbingBoxLoader color="#36d7b7" />
+                    :
+                    <>
+                        <Button variant="outlined" onClick={handleClickOpen}>
+                            Add Facilities
+                        </Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <form onSubmit={handleSubmit}>
+                                <DialogTitle>Facilities</DialogTitle>
+                                <DialogContent>
+                                    <TextField
+                                        margin="dense"
+                                        id="name"
+                                        name="name"
+                                        label="Facilities Name"
+            
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                        error={touched.name && errors.name ? true : false}
+                                        helperText={touched.name && errors.name ? errors.name : ''}
+                                    />
+                                    <TextField
+                                        margin="dense"
+                                        id="discription"
+                                        name="discription"
+                                        label="Facilities discription"
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.discription}
+                                        error={touched.discription && errors.discription ? true : false}
+                                        helperText={touched.discription && errors.discription ? errors.discription : ''}
 
-                        />
-                        <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
-                        </DialogActions>
-                    </DialogContent>
-                </form>
-            </Dialog>
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={facilities.facilities}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
-                        },
-                    }}
-                    pageSizeOptions={[5, 10]}
-                    checkboxSelection
-                />
-            </div>
-
+                                    />
+                                    <DialogActions>
+                                        <Button onClick={handleClose}>Cancel</Button>
+                                        <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
+                                    </DialogActions>
+                                </DialogContent>
+                            </form>
+                        </Dialog>
+                        <div style={{ height: 400, width: '100%' }}>
+                            <DataGrid
+                                rows={facilities.facilities}
+                                columns={columns}
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: { page: 0, pageSize: 5 },
+                                    },
+                                }}
+                                pageSizeOptions={[5, 10]}
+                                checkboxSelection
+                            />
+                        </div>
+                    </>
+                }
         </>
     );
 }
