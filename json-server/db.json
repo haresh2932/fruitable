@@ -1,89 +1,118 @@
 {
-    "fruits": [
-        {
-            "id": 1,
-            "image": "img/fruite-item-5.jpg",
-            "category":"Fruite",
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "organic"
-        },
-        {
-            "id": 2,
-            "image": "img/fruite-item-5.jpg",
-            "category":"Fruite",
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "fresh"
-        },
-        {
-            "id": 3,
-            "image": "img/fruite-item-2.jpg",
-            "category":"Fruite",
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "sales"
-        },
-        {
-            "id": 4,
-            "image": "img/fruite-item-4.jpg",
-            "category":"Fruite",
-            "name": "Apricots",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "discount"
-        },
-        {
-            "id": 5,
-            "image": "img/fruite-item-3.jpg",
-            "category":"Fruite",
-            "name": "Banana",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "expired"
-        },
-        {
-            "id": 6,
-            "image": "img/fruite-item-1.jpg",
-            "category":"Fruite",
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "organic"
-        },
-        {
-            "id": 7,
-            "image": "img/fruite-item-2.jpg",
-            "category":"Fruite",
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "fresh"
-        },
-        {
-            "id": 8,
-            "image": "img/fruite-item-5.jpg",
-            "category":"Fruite",
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "sales"
-        },
-        {
-            "id": 9,
-            "image": "img/fruite-item-1.jpg",
-            "category":"Fruite",
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "type": "discount"
-        }
-    ],
-
-    "facilities":[
-        
-    ]
+  "products": [
+    {
+      "id": "1",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "organic"
+    },
+    {
+      "id": "2",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "fresh"
+    },
+    {
+      "id": "3",
+      "image": "img/fruite-item-2.jpg",
+      "category": "Fruite",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "sales"
+    },
+    {
+      "id": "4",
+      "image": "img/fruite-item-4.jpg",
+      "category": "Fruite",
+      "name": "Apricots",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "discount"
+    },
+    {
+      "id": "5",
+      "image": "img/fruite-item-3.jpg",
+      "category": "Fruite",
+      "name": "Banana",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "expired"
+    },
+    {
+      "id": "6",
+      "image": "img/fruite-item-1.jpg",
+      "category": "Fruite",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "organic"
+    },
+    {
+      "id": "7",
+      "image": "img/fruite-item-2.jpg",
+      "category": "Fruite",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "fresh"
+    },
+    {
+      "id": "8",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "sales"
+    },
+    {
+      "id": "9",
+      "image": "img/fruite-item-1.jpg",
+      "category": "Fruite",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "discount"
+    }
+  ],
+  "facilities": [],
+  "fruites": [
+    {
+      "id": "f3e6",
+      "name": "ddd",
+      "description": "dddddd",
+      "price": 11
+    },
+    {
+      "id": "f20d",
+      "name": "ss",
+      "description": "dhbfdhb",
+      "price": 33
+    },
+    {
+      "id": "0a5f",
+      "name": "apple",
+      "description": "csfs",
+      "price": 22
+    },
+    {
+      "id": "958f",
+      "name": "Avengers EndGame",
+      "description": "vv",
+      "price": 22
+    },
+    {
+      "id": "7298",
+      "name": "22",
+      "description": "hh",
+      "price": 22
+    }
+  ]
 }

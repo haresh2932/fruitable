@@ -123,6 +123,11 @@ export default function Layout({ children }) {
             title: 'Facilities',
             icon: <StreamIcon />,
             to: '/admin/facilities'
+        },
+        {
+            title: 'Product',
+            icon: <StreamIcon />,
+            to: '/admin/products'
         }
     ]
 
