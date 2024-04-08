@@ -80,9 +80,94 @@
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
       "price": 4.99,
       "type": "discount"
+    },
+    {
+      "id": "a8e0"
     }
   ],
-  "facilities": [],
+  "fruite": [
+    {
+      "id": "12",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "organic"
+    },
+    {
+      "id": "23",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "fresh"
+    },
+    {
+      "id": "35",
+      "image": "img/fruite-item-2.jpg",
+      "category": "Fruite",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "sales"
+    },
+    {
+      "id": "49",
+      "image": "img/fruite-item-4.jpg",
+      "category": "Fruite",
+      "name": "Apricots",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "discount"
+    },
+    {
+      "id": "57",
+      "image": "img/fruite-item-3.jpg",
+      "category": "Fruite",
+      "name": "Banana",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "expired"
+    },
+    {
+      "id": "62",
+      "image": "img/fruite-item-1.jpg",
+      "category": "Fruite",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "organic"
+    },
+    {
+      "id": "77",
+      "image": "img/fruite-item-2.jpg",
+      "category": "Fruite",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "fresh"
+    },
+    {
+      "id": "87",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "sales"
+    },
+    {
+      "id": "99",
+      "image": "img/fruite-item-1.jpg",
+      "category": "Fruite",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "discount"
+    }
+  ],
   "fruites": [
     {
       "id": "f3e6",
@@ -113,6 +198,32 @@
       "name": "22",
       "description": "hh",
       "price": 22
+    }
+  ],
+  "review": [
+    {
+      "id": "2a03",
+      "produtId": "35",
+      "name": "dhfhdfg",
+      "email": "HARESH2932@GMAIL.COM",
+      "review": "kjkjdfgjsdgfdhgfdj",
+      "rating": "4"
+    },
+    {
+      "id": "ca2e",
+      "produtId": "35",
+      "name": "abhishek",
+      "email": "abhishe@gmail.com",
+      "review": "suhdfksdhhgudhg",
+      "rating": "3"
+    },
+    {
+      "id": "04ea",
+      "produtId": "35",
+      "name": "ankitbhai",
+      "email": "ankit@gmail.com",
+      "review": "kkgfyhsdgdfh",
+      "rating": "3"
     }
   ]
 }

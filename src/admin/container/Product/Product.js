@@ -9,7 +9,7 @@ import { number, object, string } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-import { getProducts } from '../../../redux/Action/product.action';
+import { addProducts, editProducts, getProducts, removeProducts } from '../../../redux/Action/product.action';
 // import { getProduct } from '../../../redux/Action/product.action';
 
 
@@ -44,7 +44,7 @@ function Product(props) {
 
     const handleDelete = (id) => {
         console.log(id);
-        // dispatch(removeFruites(id));
+        dispatch(removeProducts(id));
     }
 
     const columns = [
@@ -104,6 +104,13 @@ function Product(props) {
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
+            if (edit) {
+                console.log("yes",values);
+                dispatch(editProducts(values))
+            } else {
+                dispatch(addProducts(values))
+            }
+            
             resetForm()
             handleClose();
         },

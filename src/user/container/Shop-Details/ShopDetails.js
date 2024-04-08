@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { object, string, number, date, InferType } from 'yup';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { addReview } from "../../../redux/Action/review.action";
+import Rating from '@mui/material/Rating';
+
+
+
 
 function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
-
+  const dispatch = useDispatch()
   const { id } = useParams();
+  
+  // const [value, setValue] = React.useState(0);
+  // console.log(value);
+
+  // State to track hovered rating
+  // const rating = useSelector(state => state.rating);
 
   try {
     useEffect(() => {
@@ -12,14 +26,42 @@ function Shop_Details(props) {
     }, []);
 
     const getData = async () => {
-      const respons = await fetch("http://localhost:8000/fruits");
+      const respons = await fetch("http://localhost:8000/fruite");
       const data = await respons.json();
 
       const shopDetailsData = data.find((v) => v.id == id);
 
       setShopDetails(shopDetailsData);
     };
-  } catch (error) {}
+  } catch (error) { }
+
+  let reviewSchema = object({
+    produtId: string().required(),
+    name: string().required(),
+    email: string().email(),
+    review: string().required(),
+    rating: number().min(1).max(5),
+  });
+
+
+
+  const formik = useFormik({
+    initialValues: {
+      produtId: id,
+      name: '',
+      email: '',
+      review: '',
+      rating: 0,
+    },
+    validationSchema: reviewSchema,
+    onSubmit: (values, { resetForm }) => {
+      console.log({ ...values });
+      dispatch(addReview(values))
+      resetForm();
+    },
+  })
+
+  const { handleBlur, handleChange, handleSubmit, values, touched, errors } = formik
 
   return (
     <div>
@@ -270,15 +312,22 @@ function Shop_Details(props) {
                     </div>
                   </div>
                 </div>
-                <form action="#">
+                <form action="#" onSubmit={handleSubmit}>
                   <h4 className="mb-5 fw-bold">Leave a Reply</h4>
                   <div className="row g-4">
                     <div className="col-lg-6">
                       <div className="border-bottom rounded">
                         <input
                           type="text"
+                          name='name'
+                          id='name'
                           className="form-control border-0 me-4"
                           placeholder="Yur Name *"
+                          value={values.name}
+                          error={touched.name && errors.name ? true : false}
+                          helperText={touched.name && errors.name ? errors.name : ''}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -288,50 +337,74 @@ function Shop_Details(props) {
                           type="email"
                           className="form-control border-0"
                           placeholder="Your Email *"
+                          name='email'
+                          id='email'
+                          value={values.email}
+                          error={touched.email && errors.email ? true : false}
+                          helperText={touched.email && errors.email ? errors.email : ''}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
                     <div className="col-lg-12">
                       <div className="border-bottom rounded my-4">
                         <textarea
-                          name
-                          id
+                          name='review'
+                          id='review'
                           className="form-control border-0"
                           cols={30}
                           rows={8}
                           placeholder="Your Review *"
                           spellCheck="false"
                           defaultValue={""}
+                          value={values.review}
+                          error={touched.review && errors.review ? true : false}
+                          helperText={touched.review && errors.review ? errors.review : ''}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+
                         />
                       </div>
                     </div>
                     <div className="col-lg-12">
                       <div className="d-flex justify-content-between py-3 mb-5">
                         <div className="d-flex align-items-center">
-                          <p className="mb-0 me-3">Please rate:</p>
+                          {/* <p className="mb-0 me-3">Please rate:</p> */}
+                          <div className="star-rating">
+                            <label>Please rate:</label>
+                            <Rating
+                              name="rating"
+                              id='rating'
+                              value={values.rating}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              error={touched.rating && errors.rating ? true : false}
+                              helperText={touched.rating && errors.rating ? errors.rating : ''}
+                            />
+                          </div>
+
                           <div
                             className="d-flex align-items-center"
                             style={{ fontSize: 12 }}
                           >
-                            <i className="fa fa-star text-muted" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
-                            <i className="fa fa-star" />
                           </div>
                         </div>
-                        <a
-                          href="#"
+                        <button
+                          type="submit"
                           className="btn border border-secondary text-primary rounded-pill px-4 py-3"
                         >
                           {" "}
                           Post Comment
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </form>
               </div>
+             <div>
+              
+             </div>
             </div>
             <div className="col-lg-4 col-xl-3">
               <div className="row g-4 fruite">
