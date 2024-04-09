@@ -11,18 +11,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { addProducts, editProducts, getProducts, removeProducts } from '../../../redux/Action/product.action';
 // import { getProduct } from '../../../redux/Action/product.action';
+import { ClimbingBoxLoader } from 'react-spinners';
+
 
 
 function Product(props) {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch()
-    const [edit, setEdit] = useState(false)    
-    const products= useSelector(state => state.products)
+    const [edit, setEdit] = useState(false)
+    const products = useSelector(state => state.products)
     console.log(products.products);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getProducts())
-    },[])
+    }, [])
 
 
     const handleClickOpen = () => {
@@ -94,7 +96,7 @@ function Product(props) {
         description: string().required(),
         price: number().required()
     });
-  
+
 
     const formik = useFormik({
         initialValues: {
@@ -105,12 +107,12 @@ function Product(props) {
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
             if (edit) {
-                console.log("yes",values);
+                console.log("yes", values);
                 dispatch(editProducts(values))
             } else {
                 dispatch(addProducts(values))
             }
-            
+
             resetForm()
             handleClose();
         },
@@ -118,85 +120,92 @@ function Product(props) {
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors } = formik
     return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen} dir='rtl'>
-                Add Product
-            </Button>
-            <Box sx={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={products.products}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 5,
-                            },
-                        },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                />
-            </Box>
-            <Dialog
-                // dir='rtl'
-                open={open}
-                onClose={handleClose}
-            >
-                <form onSubmit={handleSubmit}>
-                    <DialogTitle>Add Fruites</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            margin="dense"
-                            id="name"
-                            name="name"
-                            label="Enter Fruite name"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.name}
-                            error={touched.name && errors.name ? true : false}
-                            helperText={touched.name && errors.name ? errors.name : ''}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="description"
-                            name="description"
-                            label="Description"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.description}
-                            error={touched.description && errors.description ? true : false}
-                            helperText={touched.description && errors.description ? errors.description : ''}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="price"
-                            name="price"
-                            label="Price"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.price}
-                            error={touched.price && errors.price ? true : false}
-                            helperText={touched.price && errors.price ? errors.price : ''}
-                        />
-                        <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
-                        </DialogActions>
-                    </DialogContent>
-                </form>
-            </Dialog>
+        <>
+            {
+                products.isLoading ?
+                    <ClimbingBoxLoader color="#36d7b7" /> :
+                    products.error ? <p>{products.error}</p> :
+                    <>
+                        <Button variant="outlined" onClick={handleClickOpen} dir='rtl'>
+                            Add Product
+                        </Button>
+                        <Box sx={{ height: 400, width: '100%' }}>
+                            <DataGrid
+                                rows={products.products}
+                                columns={columns}
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: {
+                                            pageSize: 5,
+                                        },
+                                    },
+                                }}
+                                pageSizeOptions={[5]}
+                                checkboxSelection
+                                disableRowSelectionOnClick
+                            />
+                        </Box>
+                        <Dialog
+                            // dir='rtl'
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <form onSubmit={handleSubmit}>
+                                <DialogTitle>Add Fruites</DialogTitle>
+                                <DialogContent>
+                                    <TextField
+                                        margin="dense"
+                                        id="name"
+                                        name="name"
+                                        label="Enter Fruite name"
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                        error={touched.name && errors.name ? true : false}
+                                        helperText={touched.name && errors.name ? errors.name : ''}
+                                    />
+                                    <TextField
+                                        margin="dense"
+                                        id="description"
+                                        name="description"
+                                        label="Description"
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.description}
+                                        error={touched.description && errors.description ? true : false}
+                                        helperText={touched.description && errors.description ? errors.description : ''}
+                                    />
+                                    <TextField
+                                        margin="dense"
+                                        id="price"
+                                        name="price"
+                                        label="Price"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.price}
+                                        error={touched.price && errors.price ? true : false}
+                                        helperText={touched.price && errors.price ? errors.price : ''}
+                                    />
+                                    <DialogActions>
+                                        <Button onClick={handleClose}>Cancel</Button>
+                                        <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
+                                    </DialogActions>
+                                </DialogContent>
+                            </form>
+                        </Dialog>
 
-        </div>
+                    </>
+            }
+        </>
     );
 }
 

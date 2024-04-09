@@ -1,15 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
-      "image": "img/fruite-item-5.jpg",
-      "category": "Fruite",
-      "name": "Grapes",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": 4.99,
-      "type": "organic"
-    },
-    {
       "id": "2",
       "image": "img/fruite-item-5.jpg",
       "category": "Fruite",
@@ -60,7 +51,7 @@
       "category": "Fruite",
       "name": "Raspberries",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": 4.99,
+      "price": 500,
       "type": "fresh"
     },
     {
@@ -73,16 +64,16 @@
       "type": "sales"
     },
     {
-      "id": "9",
-      "image": "img/fruite-item-1.jpg",
-      "category": "Fruite",
-      "name": "Oranges",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": 4.99,
-      "type": "discount"
+      "id": "818c",
+      "name": "dsfdfd",
+      "description": "fff",
+      "price": 500
     },
     {
-      "id": "a8e0"
+      "id": "1119",
+      "name": "hgdhsghs",
+      "description": "dsgdghsd",
+      "price": 99
     }
   ],
   "fruite": [
@@ -202,28 +193,20 @@
   ],
   "review": [
     {
-      "id": "2a03",
-      "produtId": "35",
-      "name": "dhfhdfg",
-      "email": "HARESH2932@GMAIL.COM",
-      "review": "kjkjdfgjsdgfdhgfdj",
-      "rating": "4"
+      "id": "9d47",
+      "name": "hsdgfhdsgf",
+      "email": "hdsgdhf@gmail.com",
+      "review": "dhgfhsdgf",
+      "rating": "4",
+      "product_id": "35"
     },
     {
-      "id": "ca2e",
-      "produtId": "35",
-      "name": "abhishek",
-      "email": "abhishe@gmail.com",
-      "review": "suhdfksdhhgudhg",
-      "rating": "3"
-    },
-    {
-      "id": "04ea",
-      "produtId": "35",
-      "name": "ankitbhai",
-      "email": "ankit@gmail.com",
-      "review": "kkgfyhsdgdfh",
-      "rating": "3"
+      "id": "aab5",
+      "name": "dfhbjsdbhf",
+      "email": "jdfkshdf@gmail.com",
+      "review": "gdsjjfhfds",
+      "rating": "5",
+      "product_id": "35"
     }
   ]
 }

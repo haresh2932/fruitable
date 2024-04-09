@@ -1,4 +1,4 @@
-import { ADD_REVIEWS } from "../ActionType";
+import { ADD_REVIEWS, ERROR_REVIEWS, GET_REVIEWS, LOADING_REVIEWS } from "../ActionType";
 
 const initialValues = {
     isLoading: false,
@@ -10,12 +10,30 @@ export const reviewReducer = (state = initialValues, action) => {
     console.log(action);
 
     switch (action.type) {
-        case ADD_REVIEWS:
+        case LOADING_REVIEWS:
             return {
                 ...state,
-                reviews: state.reviews.concat(action.payload),
+                isLoading: true
             }
-
+        case ERROR_REVIEWS:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
+            }
+        case ADD_REVIEWS:
+            return {
+                isLoading: false,
+                reviews: state.reviews.concat(action.payload),
+                error: null
+            }
+        case GET_REVIEWS: {
+            return {
+                isLoading: false,
+                reviews: action.payload,
+                error: null
+            }
+        }
 
 
         default:

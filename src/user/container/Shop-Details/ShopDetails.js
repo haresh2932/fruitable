@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
-import { addReview } from "../../../redux/Action/review.action";
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview, getReview } from "../../../redux/Action/review.action";
 import Rating from '@mui/material/Rating';
+import TextField from '@mui/material/TextField';
+import { ClimbingBoxLoader } from 'react-spinners';
+
 
 
 
@@ -13,12 +16,12 @@ function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
   const dispatch = useDispatch()
   const { id } = useParams();
-  
-  // const [value, setValue] = React.useState(0);
-  // console.log(value);
+  const review = useSelector(state => state.reviews);
+  console.log(review.reviews);
 
-  // State to track hovered rating
-  // const rating = useSelector(state => state.rating);
+  useEffect(() => {
+    dispatch(getReview())
+  }, [])
 
   try {
     useEffect(() => {
@@ -36,32 +39,30 @@ function Shop_Details(props) {
   } catch (error) { }
 
   let reviewSchema = object({
-    produtId: string().required(),
+    // productId: string().required(),
     name: string().required(),
-    email: string().email(),
+    email: string().required(),
     review: string().required(),
-    rating: number().min(1).max(5),
+    rating: number().min(1).max(5).required(),
   });
-
-
 
   const formik = useFormik({
     initialValues: {
-      produtId: id,
       name: '',
       email: '',
       review: '',
-      rating: 0,
+      rating: '',
     },
     validationSchema: reviewSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log({ ...values });
-      dispatch(addReview(values))
+      // console.log({ ...values });
+      dispatch(addReview({ ...values, product_id: id }));
       resetForm();
     },
   })
 
   const { handleBlur, handleChange, handleSubmit, values, touched, errors } = formik
+
 
   return (
     <div>
@@ -241,64 +242,32 @@ function Shop_Details(props) {
                       role="tabpanel"
                       aria-labelledby="nav-mission-tab"
                     >
-                      <div className="d-flex">
-                        <img
-                          src="img/avatar.jpg"
-                          className="img-fluid rounded-circle p-3"
-                          style={{ width: 100, height: 100 }}
-                          alt
-                        />
-                        <div className>
-                          <p className="mb-2" style={{ fontSize: 14 }}>
-                            April 12, 2024
-                          </p>
-                          <div className="d-flex justify-content-between">
-                            <h5>Jason Smith</h5>
-                            <div className="d-flex mb-3">
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star" />
-                            </div>
-                          </div>
-                          <p>
-                            The generated Lorem Ipsum is therefore always free
-                            from repetition injected humour, or
-                            non-characteristic words etc. Susp endisse ultricies
-                            nisi vel quam suscipit{" "}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="d-flex">
-                        <img
-                          src="img/avatar.jpg"
-                          className="img-fluid rounded-circle p-3"
-                          style={{ width: 100, height: 100 }}
-                          alt
-                        />
-                        <div className>
-                          <p className="mb-2" style={{ fontSize: 14 }}>
-                            April 12, 2024
-                          </p>
-                          <div className="d-flex justify-content-between">
-                            <h5>Sam Peters</h5>
-                            <div className="d-flex mb-3">
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star text-secondary" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                            </div>
-                          </div>
-                          <p className="text-dark">
-                            The generated Lorem Ipsum is therefore always free
-                            from repetition injected humour, or
-                            non-characteristic words etc. Susp endisse ultricies
-                            nisi vel quam suscipit{" "}
-                          </p>
-                        </div>
-                      </div>
+                      {review.isLoading ? <ClimbingBoxLoader color="#36d7b7" /> :
+                        review.error ? <p>{review.error}</p> :
+                          review.reviews.map((v) => (
+                            <>
+                              <div>
+
+                                <div className>
+                                  <p className="mb-2" style={{ fontSize: 14 }}>
+                                    April 12, 2024
+                                  </p>
+                                  <div className="d-flex justify-content-between">
+                                    <h5>{v.name}</h5>
+                                    <div className="d-flex mb-3">
+                                      <Rating name="read-only" value={v.rating} readOnly />
+                                    </div>
+                                  </div>
+                                  <p>
+                                    {v.review}
+                                  </p>
+                                </div>
+                              </div>
+
+                            </>
+                          ))
+                      }
+
                     </div>
                     <div className="tab-pane" id="nav-vision" role="tabpanel">
                       <p className="text-dark">
@@ -312,12 +281,12 @@ function Shop_Details(props) {
                     </div>
                   </div>
                 </div>
-                <form action="#" onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <h4 className="mb-5 fw-bold">Leave a Reply</h4>
                   <div className="row g-4">
                     <div className="col-lg-6">
                       <div className="border-bottom rounded">
-                        <input
+                        <TextField
                           type="text"
                           name='name'
                           id='name'
@@ -333,7 +302,7 @@ function Shop_Details(props) {
                     </div>
                     <div className="col-lg-6">
                       <div className="border-bottom rounded">
-                        <input
+                        <TextField
                           type="email"
                           className="form-control border-0"
                           placeholder="Your Email *"
@@ -349,10 +318,11 @@ function Shop_Details(props) {
                     </div>
                     <div className="col-lg-12">
                       <div className="border-bottom rounded my-4">
-                        <textarea
+                        <TextField
                           name='review'
                           id='review'
                           className="form-control border-0"
+                          multiline
                           cols={30}
                           rows={8}
                           placeholder="Your Review *"
@@ -374,7 +344,7 @@ function Shop_Details(props) {
                           <div className="star-rating">
                             <label>Please rate:</label>
                             <Rating
-                              name="rating"
+                              name='rating'
                               id='rating'
                               value={values.rating}
                               onChange={handleChange}
@@ -383,18 +353,12 @@ function Shop_Details(props) {
                               helperText={touched.rating && errors.rating ? errors.rating : ''}
                             />
                           </div>
-
-                          <div
-                            className="d-flex align-items-center"
-                            style={{ fontSize: 12 }}
-                          >
-                          </div>
                         </div>
+
                         <button
                           type="submit"
                           className="btn border border-secondary text-primary rounded-pill px-4 py-3"
                         >
-                          {" "}
                           Post Comment
                         </button>
                       </div>
@@ -402,9 +366,9 @@ function Shop_Details(props) {
                   </div>
                 </form>
               </div>
-             <div>
-              
-             </div>
+              <div>
+
+              </div>
             </div>
             <div className="col-lg-4 col-xl-3">
               <div className="row g-4 fruite">
