@@ -29,7 +29,7 @@ function Shop_Details(props) {
     }, []);
 
     const getData = async () => {
-      const respons = await fetch("http://localhost:8000/fruite");
+      const respons = await fetch("http://localhost:8000/products");
       const data = await respons.json();
 
       const shopDetailsData = data.find((v) => v.id == id);
@@ -55,7 +55,6 @@ function Shop_Details(props) {
     },
     validationSchema: reviewSchema,
     onSubmit: (values, { resetForm }) => {
-      // console.log({ ...values });
       dispatch(addReview({ ...values, product_id: id }));
       resetForm();
     },

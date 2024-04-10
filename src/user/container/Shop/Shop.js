@@ -13,7 +13,7 @@ function Shop(props) {
   }, []);
 
   const getData = async () => {
-    const response = await fetch("http://localhost:8000/fruite");
+    const response = await fetch("http://localhost:8000/products");
     const data = await response.json();
 
     let uniqueCategories = [...new Set(data.map((item) => item.name))];
