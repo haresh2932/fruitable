@@ -35,7 +35,6 @@ export const reviewReducer = (state = initialValues, action) => {
             }
         }
 
-
         default:
             return state
 
