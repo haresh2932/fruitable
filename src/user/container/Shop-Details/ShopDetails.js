@@ -217,7 +217,7 @@ function Shop_Details(props) {
                       role="tabpanel"
                       aria-labelledby="nav-mission-tab"
                     >
-
+                      
                     </div>
                     <div className="tab-pane" id="nav-vision" role="tabpanel">
                       <p className="text-dark">

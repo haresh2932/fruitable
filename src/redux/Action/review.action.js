@@ -1,8 +1,7 @@
 // import { type } from "@testing-library/user-event/dist/type"
-import { ADD_REVIEWS, ERROR_REVIEWS, GET_REVIEWS, LOADING_REVIEWS } from "../ActionType"
+import { ADD_REVIEWS, EDIT_REVIEWS, ERROR_REVIEWS, GET_REVIEWS, LOADING_REVIEWS, REMOVE_REVIEWS } from "../ActionType"
 import axios from 'axios';
 import { BASE_URL } from "../../utils/utilis";
-
 
 
 export const loadingReview = () => async(dispatch) => {
@@ -40,4 +39,30 @@ export const getReview = () => async(dispatch) => {
         dispatch(errorReview(error.message))
     }
 
+}
+
+
+export const removeReview = (id) => async(dispatch) => {
+    try {
+        dispatch(loadingReview()) ;
+        await axios.delete(BASE_URL + 'review/'+id )
+            .then(dispatch({type:REMOVE_REVIEWS,payload:id}))           
+            .catch((error) =>  dispatch(errorReview(error.message)))
+
+    } catch(error) {
+        dispatch(errorReview(error.message))
+    }
+}
+
+export const editReview=(data)=>async(dispatch)=>{
+    console.log(data);
+    try {
+        dispatch(loadingReview()) ;
+        await axios.put(BASE_URL + 'review/' + data.id,data)
+            .then(dispatch({type:EDIT_REVIEWS,payload:data}))           
+            .catch((error) =>  dispatch(errorReview(error.message)))
+
+    } catch(error) {
+        dispatch(errorReview(error.message))
+    }
 }

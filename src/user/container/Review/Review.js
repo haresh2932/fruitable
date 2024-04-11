@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField, createTheme } from '@mui/material';
 import { useParams } from "react-router-dom";
-import { object, string, number, date, InferType } from 'yup';
+import { object, string, number, date, InferType ,} from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReview, getReview } from "../../../redux/Action/review.action";
+import { addReview, editReview, getReview, removeReview } from "../../../redux/Action/review.action";
 import Rating from '@mui/material/Rating';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import { ClimbingBoxLoader } from 'react-spinners';
-import { id } from "useParams"
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+// import { id } from "useParams"
 
 
 function Review(props) {
     const dispatch = useDispatch()
     const review = useSelector(state => state.reviews);
     console.log(review.reviews);
+    const [edit, setEdit] = useState(false)
+    const { id } = useParams();
 
     useEffect(() => {
         dispatch(getReview())
@@ -36,11 +41,26 @@ function Review(props) {
         },
         validationSchema: reviewSchema,
         onSubmit: (values, { resetForm }) => {
-            console.log(values);
-            dispatch(addReview({ ...values, date: new Date().toLocaleDateString() }));
+            if(edit){
+                console.log(values);
+                dispatch(editReview(values))                    
+            }else{
+                console.log(values);
+                dispatch(addReview({ ...values, productId: id, date: new Date().toLocaleDateString() }));
+            }
             resetForm();
         },
     })
+
+    const handleDelete = (id) => {
+        dispatch(removeReview(id));
+    }
+
+    const handleEdit = (data) => {
+        console.log(data);
+        formik.setValues(data)
+        setEdit(true)
+    }
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors } = formik
     return (
@@ -144,6 +164,23 @@ function Review(props) {
                                         <h5>{v.name}</h5>
                                         <div className="d-flex mb-3">
                                             <Rating name="read-only" value={v.rating} readOnly />
+                                            <br></br>
+                                            <IconButton
+                                                onClick={() => handleEdit(v)}
+                                                variant="contained"
+                                                color='primary'
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+
+                                            <IconButton
+                                                onClick={() => handleDelete(v.id)}
+                                                variant="contained"
+                                                color='error'
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+
                                         </div>
                                     </div>
                                     <p>

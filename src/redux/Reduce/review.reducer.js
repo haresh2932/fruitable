@@ -1,4 +1,4 @@
-import { ADD_REVIEWS, ERROR_REVIEWS, GET_REVIEWS, LOADING_REVIEWS } from "../ActionType";
+import { ADD_REVIEWS, EDIT_REVIEWS, ERROR_REVIEWS, GET_REVIEWS, LOADING_REVIEWS, REMOVE_REVIEWS } from "../ActionType";
 
 const initialValues = {
     isLoading: false,
@@ -34,6 +34,18 @@ export const reviewReducer = (state = initialValues, action) => {
                 error: null
             }
         }
+        case REMOVE_REVIEWS:
+            return {
+                isLoading: false,
+                reviews: state.reviews.filter((v) => v.id !== action.payload),
+                error: null
+            }
+        case EDIT_REVIEWS:
+            return {
+                isLoading: false,
+                reviews: state.reviews.map((v) => v.id === action.payload.id ? action.payload : v),
+                error: null
+            }
 
         default:
             return state
