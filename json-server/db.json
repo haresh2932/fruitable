@@ -191,25 +191,16 @@
       "price": 22
     }
   ],
-  "review": [
+  "review": [],
+  "cart": [
     {
-      "id": "9d47",
-      "name": "haresh",
-      "email": "hdsgdhf@gmail.com",
-      "review": "abhi",
-      "rating": "4",
-      "product_id": "35",
-      "productId": "6",
-      "date": "11/4/2024"
-    },
-    {
-      "id": "8412",
-      "name": "haresh",
-      "email": "hdsgdhf@gmail.com",
-      "review": "HSGDHSAD",
-      "rating": "4",
-      "productId": "6",
-      "date": "11/4/2024"
+      "id": "3",
+      "image": "img/fruite-item-2.jpg",
+      "category": "Fruite",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "sales"
     }
   ]
 }

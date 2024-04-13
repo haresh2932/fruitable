@@ -16,6 +16,9 @@ export const LOADING_REVIEWS='LOADING_REVIEWS'
 export const ERROR_REVIEWS='ERROR_REVIEWS'
 export const REMOVE_REVIEWS='REMOVE_REVIEWS'
 export const EDIT_REVIEWS='EDIT_REVIEWS'
+export const ADD_CART='ADD_CART'
+export const GET_CART='GET_CART'
+
 
 
 
