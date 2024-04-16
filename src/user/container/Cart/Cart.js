@@ -5,7 +5,7 @@ import { getCart } from '../../../redux/Action/cart.action';
 function Cart(props) {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
-    console.log(cart)
+    console.log(cart.cart)
 
     useEffect(() => {
         dispatch(getCart())
@@ -78,7 +78,7 @@ function Cart(props) {
                                     </tr>
                                 ))}
 
-                                
+
                             </tbody>
                         </table>
                     </div>

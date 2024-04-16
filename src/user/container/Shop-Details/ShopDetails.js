@@ -11,6 +11,7 @@ import Cart from "../Cart/Cart";
 import { useFormik } from "formik";
 import { number, object, string } from "yup";
 import { addCart } from "../../../redux/Action/cart.action";
+import { addtocart } from "../../../redux/Slice/cart.slice";
 
 
 
@@ -49,14 +50,8 @@ function Shop_Details(props) {
   const addTocart =()=>{
     console.log("yes");
     console.log(shopDetails);
-    dispatch(addCart(shopDetails))
+    dispatch(addtocart(shopDetails))
   }
-
-
-
-
-  
-
 
   return (
     <div>

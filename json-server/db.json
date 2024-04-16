@@ -201,6 +201,24 @@
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
       "price": 4.99,
       "type": "sales"
+    },
+    {
+      "id": "2",
+      "image": "img/fruite-item-5.jpg",
+      "category": "Fruite",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "fresh"
+    },
+    {
+      "id": "4",
+      "image": "img/fruite-item-4.jpg",
+      "category": "Fruite",
+      "name": "Apricots",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "type": "discount"
     }
   ]
 }
