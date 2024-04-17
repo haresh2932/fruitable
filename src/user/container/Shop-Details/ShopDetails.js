@@ -10,7 +10,7 @@ import Counter from "../Counter/Counter";
 import Cart from "../Cart/Cart";
 import { useFormik } from "formik";
 import { number, object, string } from "yup";
-import { addCart } from "../../../redux/Action/cart.action";
+// import { addCart } from "../../../redux/Action/cart.action";
 import { addtocart } from "../../../redux/Slice/cart.slice";
 
 
@@ -19,7 +19,10 @@ import { addtocart } from "../../../redux/Slice/cart.slice";
 
 function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
+
+  const cart = useSelector(state => state.cart_slice)
+  console.log(cart)
 
 
   const { id } = useParams();
@@ -47,10 +50,10 @@ function Shop_Details(props) {
 
   }
 
-  const addTocart =()=>{
+  const addTocart = () => {
     console.log("yes");
-    console.log(shopDetails);
-    dispatch(addtocart(shopDetails))
+    // console.log(shopDetails);
+    dispatch(addtocart(id))
   }
 
   return (
@@ -75,64 +78,65 @@ function Shop_Details(props) {
           <div className="row g-4 mb-5">
             <div className="col-lg-8 col-xl-9">
               <div className="row g-4">
-                  <div className="col-lg-6">
-                    <div className="border rounded">
-                      <a href="#">
-                        <img
-                          src={`../${shopDetails?.image}`}
-                          className="img-fluid rounded"
-                          alt="Image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <h4 className="fw-bold mb-3">{shopDetails?.name}</h4>
-                    <p className="mb-3">Category: {shopDetails.category}</p>
-                    <h5 className="fw-bold mb-3">{shopDetails?.price} $</h5>
-                    <div className="d-flex mb-4">
-                      <i className="fa fa-star text-secondary" />
-                      <i className="fa fa-star text-secondary" />
-                      <i className="fa fa-star text-secondary" />
-                      <i className="fa fa-star text-secondary" />
-                      <i className="fa fa-star" />
-                    </div>
-                    <p className="mb-4">{shopDetails?.description}</p>
-                    <p className="mb-4">
-                      Susp endisse ultricies nisi vel quam suscipit. Sabertooth
-                      peacock flounder; chain pickerel hatchetfish, pencilfish
-                      snailfish
-                    </p>
-                    <div
-                      className="input-group quantity mb-5"
-                      style={{ width: 100 }}
-                    >
-                      <div className="input-group-btn">
-                        <button className="btn btn-sm btn-minus rounded-circle bg-light border">
-                          <i className="fa fa-minus" />
-                        </button>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control form-control-sm text-center border-0"
-                        defaultValue={1}
+                <div className="col-lg-6">
+                  <div className="border rounded">
+                    <a href="#">
+                      <img
+                        src={`../${shopDetails?.image}`}
+                        className="img-fluid rounded"
+                        alt="Image"
                       />
-                      <div className="input-group-btn">
-                        <button className="btn btn-sm btn-plus rounded-circle bg-light border">
-                          <i className="fa fa-plus" />
-                        </button>
-                      </div>
-                      {/* <Counter/> */}
-                    </div>
-                    <button
-                      onClick={addTocart}
-                      className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
-                    >
-                      <i className="fa fa-shopping-bag me-2 text-primary" /> Add
-                      to cart
-                    </button>
+                    </a>
                   </div>
-              
+                </div>
+                <div className="col-lg-6">
+                  <h4 className="fw-bold mb-3">{shopDetails?.name}</h4>
+                  <p className="mb-3">Category: {shopDetails.category}</p>
+                  <h5 className="fw-bold mb-3">{shopDetails?.price} $</h5>
+                  <div className="d-flex mb-4">
+                    <i className="fa fa-star text-secondary" />
+                    <i className="fa fa-star text-secondary" />
+                    <i className="fa fa-star text-secondary" />
+                    <i className="fa fa-star text-secondary" />
+                    <i className="fa fa-star" />
+                  </div>
+                  <p className="mb-4">{shopDetails?.description}</p>
+                  <p className="mb-4">
+                    Susp endisse ultricies nisi vel quam suscipit. Sabertooth
+                    peacock flounder; chain pickerel hatchetfish, pencilfish
+                    snailfish
+                  </p>
+                  <div
+                    className="input-group quantity mb-5"
+                    style={{ width: 100 }}
+                  >
+                    <div className="input-group-btn">
+                      <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                        <i className="fa fa-minus" />
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control form-control-sm text-center border-0"
+                      defaultValue={1}
+                    />
+                    <div className="input-group-btn">
+                      <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                        <i className="fa fa-plus" />
+                      </button>
+                    </div>
+                    {/* <Counter/> */}
+                  </div>
+                  <a
+                    href="#"
+                    className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
+                    onClick={addTocart}
+                  >
+                    <i className="fa fa-shopping-bag me-2 text-primary" /> Add
+                    to cart
+                  </a>
+                </div>
+
                 <div className="col-lg-12">
                   <nav>
                     <div className="nav nav-tabs mb-3">

@@ -4,8 +4,8 @@ import { getCart } from '../../../redux/Action/cart.action';
 
 function Cart(props) {
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart)
-    console.log(cart.cart)
+    const cart = useSelector(state => state.cart_slice)
+    console.log(cart.cart_slice)
 
     useEffect(() => {
         dispatch(getCart())
@@ -39,7 +39,6 @@ function Cart(props) {
                             </thead>
                             <tbody>
                                 {cart.cart.map((v) => (
-
                                     <tr>
                                         <th scope="row">
                                             <div className="d-flex align-items-center">
@@ -68,7 +67,7 @@ function Cart(props) {
                                             </div>
                                         </td>
                                         <td>
-                                            <p className="mb-0 mt-4">2.99 $</p>
+                                            <p className="mb-0 mt-4">{v.price} $</p>
                                         </td>
                                         <td>
                                             <button className="btn btn-md rounded-circle bg-light border mt-4">
@@ -77,8 +76,6 @@ function Cart(props) {
                                         </td>
                                     </tr>
                                 ))}
-
-
                             </tbody>
                         </table>
                     </div>
