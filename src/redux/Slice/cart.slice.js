@@ -22,9 +22,24 @@ const cartSlice = createSlice({
                 state.cart.push({ pid: action.payload, qty: 1 })
             }
             // state.cart.push({ pid: action.payload, qty: 1 })
+        },
+        increamentQty:(state,action)=>{
+            console.log(action);
+            let index = state.cart.findIndex((v) => v.pid === action.payload)
+            console.log(index);
+            if (index !== -1) {
+                state.cart[index].qty++
+            }  
+        },
+        decreamentQty:(state,action)=>{
+            let index = state.cart.findIndex((v) => v.pid === action.payload)
+            console.log(index);
+            if (index !== -1) {
+                state.cart[index].qty--
+            }
         }
     }
 })
 
-export const { addtocart } = cartSlice.actions
+export const { addtocart,increamentQty,decreamentQty } = cartSlice.actions
 export default cartSlice.reducer

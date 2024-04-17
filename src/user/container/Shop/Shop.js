@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProducts } from "../../../redux/Action/product.action";
 
 function Shop(props) {
   const [shopData, setShopData] = useState([]);
@@ -8,22 +10,14 @@ function Shop(props) {
   const [search, setSearchData] = useState("");
   const [protype, setProType] = useState("");
 
+  const dispatch = useDispatch()
   useEffect(() => {
-    getData();
+    dispatch(getProducts())
   }, []);
 
-  const getData = async () => {
-    const response = await fetch("http://localhost:8000/products");
-    const data = await response.json();
+  const products = useSelector(state => state.products)
+  console.log(products.products);
 
-    let uniqueCategories = [...new Set(data.map((item) => item.name))];
-
-    let uniqtype = [...new Set(data.map((v) => v.type))];
-
-    setType(uniqtype);
-    setCatagory(uniqueCategories);
-    setShopData(data);
-  };
 
   const lastData = () => {
     let finalData = shopData.filter((item) =>
@@ -284,7 +278,7 @@ function Shop(props) {
                 </div>
                 <div className="col-lg-9">
                   <div className="row g-4 justify-content-center">
-                    {enddata.map((v, i) => (
+                    {products.products.map((v, i) => (
                       <div className="col-md-6 col-lg-6 col-xl-4">
                         <Link to={`/shop/${v.id}`}>
                           <div className="rounded position-relative fruite-item">

@@ -5,12 +5,12 @@ import { NavLink } from 'react-router-dom';
 function Header(props) {
     const cart = useSelector(state => state.cart_slice)
     console.log(cart);
-    const cart_count=cart.cart.reduce(
+    const totalCartQty=cart.cart.reduce(
         (accumulator, currentValue) => accumulator + currentValue.qty,
         0,
     )
 
-    console.log(cart_count);
+    console.log(totalCartQty);
 
     return (
         <div>
@@ -23,7 +23,7 @@ function Header(props) {
                             <small className="me-3"><i className="fas fa-envelope me-2 text-secondary" /><a href="#" className="text-white">Email@Example.com</a></small>
                         </div>
                         <div className="top-link pe-2">
-                            <a href="#" className="text-white"><small className="text-white mx-2">Privacy Policy</small>/</a>
+                            <NavLink to='/' className="text-white"><small className="text-white mx-2">Privacy Policy</small>/</NavLink>
                             <a href="#" className="text-white"><small className="text-white mx-2">Terms of Use</small>/</a>
                             <a href="#" className="text-white"><small className="text-white ms-2">Sales and Refunds</small></a>
                         </div>
@@ -62,7 +62,7 @@ function Header(props) {
                                             className="fa fa-shopping-bag fa-2x"
                                         />
                                     </NavLink>
-                                    <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{cart_count}</span>
+                                    <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{totalCartQty}</span>
                                 </a>
                                 <a href="#" className="my-auto">
                                     <i className="fas fa-user fa-2x" />
