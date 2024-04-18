@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { addReview, getReview } from "../../../redux/Action/review.action";
-import Rating from '@mui/material/Rating';
-import TextField from '@mui/material/TextField';
-import { ClimbingBoxLoader } from 'react-spinners';
 import Review from "../Review/Review";
-import Counter from "../Counter/Counter";
-import Cart from "../Cart/Cart";
-import { useFormik } from "formik";
-import { number, object, string } from "yup";
-// import { addCart } from "../../../redux/Action/cart.action";
-import { addtocart } from "../../../redux/Slice/cart.slice";
-
-
-
+import { addtocart, decreamentQty, increamentQty } from "../../../redux/Slice/cart.slice";
 
 
 function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
   const dispatch = useDispatch()
+  const { id } = useParams();
+
+  const products = useSelector(state => state.products)
+  console.log(products);
+
+  const productData = products.products.find((v) => v.id === id)
+  console.log(productData);
 
   const cart = useSelector(state => state.cart_slice)
-  console.log(cart)
+  const qty = cart.cart.map((v) => {
+    if (v.pid === id) {
+      return v.qty
+    }
+  })
+  console.log(qty);
 
-
-  const { id } = useParams();
-  // const review = useSelector(state => state.reviews);
-  // console.log(review.reviews);
-
-  // useEffect(() => {
-  //   dispatch(getReview())
-  // }, [])
 
   try {
     useEffect(() => {
@@ -52,8 +44,18 @@ function Shop_Details(props) {
 
   const addTocart = () => {
     console.log("yes");
-    // console.log(shopDetails);
     dispatch(addtocart(id))
+  }
+
+  const handleInc = (id) => {
+    console.log("yes");
+    console.log(id);
+    dispatch(increamentQty(id))
+  }
+
+  const handleDec = (id) => {
+    console.log(id);
+    dispatch(decreamentQty(id))
   }
 
   return (
@@ -82,17 +84,20 @@ function Shop_Details(props) {
                   <div className="border rounded">
                     <a href="#">
                       <img
-                        src={`../${shopDetails?.image}`}
+                        src={`../${productData?.image}`}
                         className="img-fluid rounded"
                         alt="Image"
                       />
                     </a>
                   </div>
                 </div>
+                {/* {products.products.map((v)=>(
+
+                ))} */}
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">{shopDetails?.name}</h4>
-                  <p className="mb-3">Category: {shopDetails.category}</p>
-                  <h5 className="fw-bold mb-3">{shopDetails?.price} $</h5>
+                  <h4 className="fw-bold mb-3">{productData?.name}</h4>
+                  <p className="mb-3">Category: {productData.category}</p>
+                  <h5 className="fw-bold mb-3">{productData?.price} $</h5>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />
@@ -100,7 +105,7 @@ function Shop_Details(props) {
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star" />
                   </div>
-                  <p className="mb-4">{shopDetails?.description}</p>
+                  <p className="mb-4">{productData?.description}</p>
                   <p className="mb-4">
                     Susp endisse ultricies nisi vel quam suscipit. Sabertooth
                     peacock flounder; chain pickerel hatchetfish, pencilfish
@@ -111,17 +116,13 @@ function Shop_Details(props) {
                     style={{ width: 100 }}
                   >
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <button onClick={() => handleDec(productData?.id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
                         <i className="fa fa-minus" />
                       </button>
                     </div>
-                    <input
-                      type="text"
-                      className="form-control form-control-sm text-center border-0"
-                      defaultValue={1}
-                    />
+                    <span>{qty}</span>
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button onClick={() => handleInc(productData?.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                         <i className="fa fa-plus" />
                       </button>
                     </div>

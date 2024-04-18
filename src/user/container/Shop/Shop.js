@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { getProducts } from "../../../redux/Action/product.action";
+import { addtocart } from "../../../redux/Slice/cart.slice";
 
 function Shop(props) {
   const [shopData, setShopData] = useState([]);
@@ -18,20 +19,22 @@ function Shop(props) {
   const products = useSelector(state => state.products)
   console.log(products.products);
 
+  
+  const cart = useSelector(state => state.cart_slice)
+  console.log(cart.cart)
 
-  const lastData = () => {
-    let finalData = shopData.filter((item) =>
-      item.name.toLowerCase().includes(search)
-    );
+  
+const handleProduct=(id)=>{
+  dispatch(addtocart(id)) 
+}
 
-    if (protype) {
-      return finalData.filter((val) => val.type === protype);
-    } else {
-      return finalData;
-    }
-  };
+const handleQty=(id)=>{
+    cart.cart.push({pid:id,qty:1})
+}
 
-  const enddata = lastData();
+
+
+  
 
   return (
     <div>
@@ -302,13 +305,13 @@ function Shop(props) {
                                 <p className="text-dark fs-5 fw-bold mb-0">
                                   $ {v.price} / kg
                                 </p>
-                                <a
+                                <Link
                                   href="#"
                                   className="btn border border-secondary rounded-pill px-3 text-primary"
+                                  onClick={()=>handleProduct(v.id)}
                                 >
-                                  <i className="fa fa-shopping-bag me-2 text-primary" />{" "}
                                   Add to cart
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>

@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decreamentQty, increamentQty } from '../../../redux/Slice/cart.slice';
+import { decreamentQty, increamentQty, removeItem } from '../../../redux/Slice/cart.slice';
 import { NavLink } from 'react-router-dom';
-// import { retry } from '@reduxjs/toolkit/query';
-// import { getCart } from '../../../redux/Action/cart.action';
 
 function Cart(props) {
 
@@ -14,31 +12,33 @@ function Cart(props) {
     const products = useSelector(state => state.products)
     console.log(products.products);
     console.log(cart.cart, products.products);
-    
+
 
     const productData = cart.cart.map((v) => {
         const product = products.products.find((product) => product.id === v.pid)
 
-        const totalPrice=v.qty*product.price
-
-        return { ...product, qty: v.qty ,totalPrice:totalPrice}
+        return { ...product, qty: v.qty }
     })
 
     console.log(productData);
 
-    const Subtotal=productData.reduce((acc,v)=>acc+v.totalPrice,0)
-    const Total=Subtotal*1.18
+    const Subtotal = productData.reduce((acc, v) => acc + v.qty*v.price, 0)
+    const Total = Subtotal * 1.18
 
 
-   
+
     const handleIncreament = (id) => {
         console.log("yes");
-        dispatch(increamentQty(id))      
+        dispatch(increamentQty(id))
     }
 
     const handleDecreament = (id) => {
         console.log("no");
-        dispatch(decreamentQty(id))        
+        dispatch(decreamentQty(id))
+    }
+
+    const handleRemove =(id)=>{
+        dispatch(removeItem(id))
     }
 
 
@@ -102,10 +102,10 @@ function Cart(props) {
                                             </div>
                                         </td>
                                         <td>
-                                            <p className="mb-0 mt-4">{p.totalPrice}$</p>
+                                            <p className="mb-0 mt-4">{p.qty * p.price}$</p>
                                         </td>
                                         <td>
-                                            <button className="btn btn-md rounded-circle bg-light border mt-4">
+                                            <button onClick={() => handleRemove(p.id)} className="btn btn-md rounded-circle bg-light border mt-4">
                                                 <i className="fa fa-times text-danger" />
                                             </button>
                                         </td>
@@ -131,7 +131,7 @@ function Cart(props) {
                                     <div className="d-flex justify-content-between">
                                         <h5 className="mb-0 me-4">Shipping</h5>
                                         <div className>
-                                            <p className="mb-0">Flat rate: $</p>
+                                            <p className="mb-0">Flat rate: $ 1.18</p>
                                         </div>
                                     </div>
                                     <p className="mb-0 text-end">Shipping to Ukraine.</p>
