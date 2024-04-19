@@ -13,13 +13,13 @@ const cartSlice = createSlice({
         addtocart: (state, action) => {
             console.log(action);
 
-            let index = state.cart.findIndex((v) => v.pid === action.payload)
+            let index = state.cart.findIndex((v) => v.pid === action.payload.id)
             console.log(index);
 
             if (index !== -1) {
                 state.cart[index].qty++
             } else {
-                state.cart.push({ pid: action.payload, qty: 1 })
+                state.cart.push({ pid: action.payload.id, qty: action.payload.qty })
             }
             // state.cart.push({ pid: action.payload, qty: 1 })
         },

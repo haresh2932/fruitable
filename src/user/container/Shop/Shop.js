@@ -24,13 +24,12 @@ function Shop(props) {
   console.log(cart.cart)
 
   
-const handleProduct=(id)=>{
-  dispatch(addtocart(id)) 
+const handleProduct=(event,id)=>{
+  event.preventDefault()
+  dispatch(addtocart({id,qty: 1})) 
 }
 
-const handleQty=(id)=>{
-    cart.cart.push({pid:id,qty:1})
-}
+
 
 
 
@@ -305,13 +304,13 @@ const handleQty=(id)=>{
                                 <p className="text-dark fs-5 fw-bold mb-0">
                                   $ {v.price} / kg
                                 </p>
-                                <Link
+                                <a
                                   href="#"
                                   className="btn border border-secondary rounded-pill px-3 text-primary"
-                                  onClick={()=>handleProduct(v.id)}
+                                  onClick={(event)=>handleProduct(event,v.id)}
                                 >
                                   Add to cart
-                                </Link>
+                                </a>
                               </div>
                             </div>
                           </div>

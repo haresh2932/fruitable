@@ -7,6 +7,7 @@ import { addtocart, decreamentQty, increamentQty } from "../../../redux/Slice/ca
 
 function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch()
   const { id } = useParams();
 
@@ -16,13 +17,10 @@ function Shop_Details(props) {
   const productData = products.products.find((v) => v.id === id)
   console.log(productData);
 
+
   const cart = useSelector(state => state.cart_slice)
-  const qty = cart.cart.map((v) => {
-    if (v.pid === id) {
-      return v.qty
-    }
-  })
-  console.log(qty);
+  console.log(cart);
+
 
 
   try {
@@ -41,21 +39,22 @@ function Shop_Details(props) {
   } catch (error) {
 
   }
+  console.log(qty);
 
-  const addTocart = () => {
+  const addTocart = (event) => {
+    // event.preventDefault();
     console.log("yes");
-    dispatch(addtocart(id))
+    dispatch(addtocart({id, qty}))
   }
 
-  const handleInc = (id) => {
-    console.log("yes");
-    console.log(id);
-    dispatch(increamentQty(id))
+  const handleInc = () => {
+    setQty(count => count + 1);
   }
 
-  const handleDec = (id) => {
-    console.log(id);
-    dispatch(decreamentQty(id))
+  const handleDec = () => {
+    if (qty > 1) {
+      setQty(count => count - 1);
+    }
   }
 
   return (
@@ -116,13 +115,13 @@ function Shop_Details(props) {
                     style={{ width: 100 }}
                   >
                     <div className="input-group-btn">
-                      <button onClick={() => handleDec(productData?.id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <button onClick={handleDec} className="btn btn-sm btn-minus rounded-circle bg-light border">
                         <i className="fa fa-minus" />
                       </button>
                     </div>
                     <span>{qty}</span>
                     <div className="input-group-btn">
-                      <button onClick={() => handleInc(productData?.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button onClick={handleInc} className="btn btn-sm btn-plus rounded-circle bg-light border">
                         <i className="fa fa-plus" />
                       </button>
                     </div>
@@ -131,7 +130,7 @@ function Shop_Details(props) {
                   <a
                     href="#"
                     className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
-                    onClick={addTocart}
+                    onClick={(event) => addTocart(event)}
                   >
                     <i className="fa fa-shopping-bag me-2 text-primary" /> Add
                     to cart
@@ -793,5 +792,6 @@ function Shop_Details(props) {
     </div>
   );
 }
+
 
 export default Shop_Details;
