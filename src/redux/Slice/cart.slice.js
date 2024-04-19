@@ -23,7 +23,6 @@ const cartSlice = createSlice({
             }
             // state.cart.push({ pid: action.payload, qty: 1 })
         },
-
         increamentQty: (state, action) => {
             let index = state.cart.findIndex((v) => v.pid === action.payload)
             if (index!== -1) {
