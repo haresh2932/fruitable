@@ -5,6 +5,7 @@ import { productReducer } from "./product.reducer";
 import { reviewReducer } from "./review.reducer";
 import { cartReducer } from "./cart.reducer";
 import cartSlice from "../Slice/cart.slice";
+import coupanSlice from "../Slice/coupan.slice";
 // import cartSlice from "../Slice/cart.slice";
 
 
@@ -13,8 +14,8 @@ export const rootreducers = combineReducers({
     facilities:facilitiesReducer,
     products:productReducer,
     reviews:reviewReducer,
-    // cart:cartReducer,
-    cart_slice:cartSlice
+    cart_slice:cartSlice,
+    coupan:coupanSlice
 });
 
 

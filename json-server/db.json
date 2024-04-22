@@ -220,5 +220,67 @@
       "price": 4.99,
       "type": "discount"
     }
+  ],
+  "coupan": [
+    {
+      "id": "ef94",
+      "coupan": "april",
+      "percentage": "20",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "f1cc",
+      "coupan": "april",
+      "percentage": "10",
+      "expiry": "2024-04-10"
+    },
+    {
+      "id": "c321",
+      "coupan": "april",
+      "percentage": "10",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "5f6d",
+      "coupan": "april",
+      "percentage": "10",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "eb1b",
+      "coupan": "april",
+      "percentage": "10",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "df39",
+      "coupan": "april10",
+      "percentage": "20",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "16e5",
+      "coupan": "april10",
+      "percentage": "10",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "9d18",
+      "coupan": "april10",
+      "percentage": "20",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "5658",
+      "coupan": "april10",
+      "percentage": "20",
+      "expiry": "2024-04-30"
+    },
+    {
+      "id": "dd79",
+      "coupan": "april10",
+      "percentage": "10",
+      "expiry": "2024-04-30"
+    }
   ]
 }
