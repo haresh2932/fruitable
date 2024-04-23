@@ -10,17 +10,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { ClimbingBoxLoader } from 'react-spinners';
-import { addCoupan } from '../../../redux/Slice/coupan.slice';
+import { addCoupan, deleteCoupan, editCoupan, getCoupan } from '../../../redux/Slice/coupan.slice';
 function Coupan(props) {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false);
     const coupan=useSelector((state)=>state.coupan)
     console.log(coupan);
+
+    
     
 
     useEffect(() => {
-        
+        dispatch(getCoupan())
     }, [])
 
 
@@ -42,7 +44,7 @@ function Coupan(props) {
     }
 
     const handleDelete = (id) => {
-      
+      dispatch(deleteCoupan(id))
     }
 
     const columns = [
@@ -103,7 +105,7 @@ function Coupan(props) {
         validationSchema: coupanSchema,
         onSubmit: (values, { resetForm }) => {
             if (edit) {
-                console.log("yes", values);
+                dispatch(editCoupan(values));
                
             } else {
                 dispatch(addCoupan(values))

@@ -8,21 +8,59 @@ const initialState = {
     error: null
 }
 
-export const addCoupan = createAsyncThunk(
-    'coupan/add',
+export const getCoupan = createAsyncThunk(
+    'coupan/get',
 
-    async (data) => {
-        console.log(data);
+    async () => {
         try {
-            const response = await axios.post(BASE_URL + 'coupan',data)
-            console.log(response);
-            return response.data
-
+            const response = await axios.get(BASE_URL + 'coupan')
+            return (response.data);
         } catch (error) {
             return error.message
         }
     }
 
+)
+
+export const addCoupan = createAsyncThunk(
+    'coupan/add',
+    async (data) => {
+        console.log(data);
+        try {
+            const response = await axios.post(BASE_URL + 'coupan', data)
+            return response.data
+        } catch (error) {
+            return error.message
+        }
+    }
+
+)
+
+export const deleteCoupan = createAsyncThunk(
+    'coupan/delete',
+    async (id) => {
+        try {
+            await axios.delete(BASE_URL + 'coupan/' + id)
+            return id;
+        } catch (error) {
+            return error.message
+        }
+    }
+)
+
+export const editCoupan = createAsyncThunk(
+    'coupan/edit',
+    async (data) => {
+        console.log(data);
+        try {
+            const response = await axios.put(BASE_URL + 'coupan/' + data.id, data)
+            console.log(response.data);
+            return response.data
+        } catch (error) {
+            return error.message
+        }
+
+    }
 )
 
 const coupanSlice = createSlice({
@@ -33,10 +71,24 @@ const coupanSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(addCoupan.fulfilled, (state, action) => {
-            console.log(state,action);
-           state.coupan= state.coupan.concat(action.payload)
+            console.log(state, action);
+            state.coupan = state.coupan.concat(action.payload)
         })
-
+        builder.addCase(getCoupan.fulfilled, (state, action) => {
+            state.coupan = action.payload;
+        })
+        builder.addCase(deleteCoupan.fulfilled, (state, action) => {
+            state.coupan = state.coupan.filter((v) => v.id !== action.payload);
+        })
+        builder.addCase(editCoupan.fulfilled, (state, action) => {
+            state.coupan = state.coupan.map((v) => {
+                if (v.id === action.payload.id) {
+                    return action.payload
+                } else {
+                   return v
+                }
+            })
+        })
     }
 
 })
