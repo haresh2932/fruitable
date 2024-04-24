@@ -27,13 +27,7 @@ function Shop(props) {
 const handleProduct=(event,id)=>{
   event.preventDefault()
   dispatch(addtocart({id,qty: 1})) 
-}
-
-
-
-
-
-  
+}  
 
   return (
     <div>

@@ -1,18 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decreamentQty, increamentQty, removeItem } from '../../../redux/Slice/cart.slice';
 import { NavLink } from 'react-router-dom';
+import { getCoupan } from '../../../redux/Slice/coupan.slice';
+import { useFormik } from 'formik';
+import { date, object, string } from 'yup';
+import { TextField } from '@mui/material';
 
 function Cart(props) {
 
     const dispatch = useDispatch()
+    const [discount, setDiscount] = useState(0);
+
+
 
     const cart = useSelector(state => state.cart_slice)
     console.log(cart.cart)
     const products = useSelector(state => state.products)
     console.log(products.products);
     console.log(cart.cart, products.products);
+    const coupan = useSelector((state) => state.coupan)
+    console.log(coupan);
 
+    useEffect(() => {
+        dispatch(getCoupan())
+    }, [])
 
     const productData = cart.cart.map((v) => {
         const product = products.products.find((product) => product.id === v.pid)
@@ -22,8 +34,11 @@ function Cart(props) {
 
     console.log(productData);
 
-    const Subtotal = productData.reduce((acc, v) => acc + v.qty*v.price, 0)
-    const Total = Subtotal * 1.18
+    const Shipping=discount>0?10:15
+
+    const Subtotal = productData.reduce((acc, v) => acc + v.qty * v.price, 0)
+    const totalDiscount = Subtotal * (discount / 100)
+    const Total = Subtotal - totalDiscount + Shipping
 
 
 
@@ -37,9 +52,58 @@ function Cart(props) {
         dispatch(decreamentQty(id))
     }
 
-    const handleRemove =(id)=>{
+    const handleRemove = (id) => {
         dispatch(removeItem(id))
     }
+
+    const handleCoupan = (data) => {
+        console.log(data.coupan);
+        let flag = 0;
+        coupan.coupan.map((v) => {
+            if (v.coupan === data.coupan) {
+                console.log(v.coupan, data.coupan);
+                const currentDate = new Date();
+                console.log(currentDate);
+                const expiryDate = new Date(v.expiry);
+                console.log(expiryDate);
+                if (currentDate <= expiryDate) {
+                    flag = 1;
+                    setDiscount(v.percentage)
+                } else {
+                    flag = 2;
+                }
+            }
+        });
+        if (flag === 0) {
+            console.log("Invaliad coupon");
+            formik.setFieldError("coupan", "Invaliad coupon");
+        } else if (flag === 1) {
+            console.log("coupon applied successfully");
+
+            formik.setFieldError("coupan", "coupan applied successfully");
+        } else if (flag === 2) {
+            console.log("Coupon expired.");
+            formik.setFieldError("coupan", "Coupon expired.");
+        }
+    };
+
+    let cartSchema = object({
+        coupan: string().required("Please enter Coupan"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            coupan: '',
+        },
+        validationSchema: cartSchema,
+        onSubmit: (values) => {
+            handleCoupan(values)
+            // resetForm()
+        },
+    })
+
+
+    const { handleSubmit, handleBlur, handleChange, errors, values, touched } = formik
 
 
 
@@ -114,11 +178,32 @@ function Cart(props) {
                             </tbody>
                         </table>
                     </div>
+                    
                     <div className="mt-5">
-                        <input type="text" className="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" />
-                        <button className="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                name="coupan"
+                                type="text"
+                                className="border-0 border-bottom rounded me-5 py-3 mb-4"
+                                placeholder="Coupon Code"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.coupan}
+                            />
+                            {errors.coupan && touched.coupan ? (
+                                <span className="error">{errors.coupan}</span>
+                            ) : <span className="success">{errors.coupan}</span>
+                            }
+                            <button
+                                className="btn border-secondary rounded-pill px-4 py-3 text-primary"
+                                type='submit'
+                            >
+                                Apply Coupon
+                            </button>
+                        </form>
                     </div>
-                    <div className="row g-4 justify-content-end">
+
+                    <div className="row g-4 justify-content-end cart-container" >
                         <div className="col-8" />
                         <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                             <div className="bg-light rounded">
@@ -128,17 +213,21 @@ function Cart(props) {
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
                                         <p className="mb-0">${Subtotal}</p>
                                     </div>
+                                    <div className="d-flex justify-content-between mb-4">
+                                        <h5 className="mb-0 me-4">dicount:{discount}%</h5>
+                                        <p className="mb-0">{totalDiscount}</p>
+                                    </div>
                                     <div className="d-flex justify-content-between">
                                         <h5 className="mb-0 me-4">Shipping</h5>
                                         <div className>
-                                            <p className="mb-0">Flat rate: $ 1.18</p>
+                                            <p className="mb-0">Flat rate: $ 3</p>
                                         </div>
                                     </div>
                                     <p className="mb-0 text-end">Shipping to Ukraine.</p>
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">${Total}</p>
+                                    <p className="mb-0 pe-4">${Total.toFixed(2)}</p>
                                 </div>
                                 <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>
@@ -148,7 +237,6 @@ function Cart(props) {
             </div>
             {/* Cart Page End */}
         </div>
-
     );
 }
 
