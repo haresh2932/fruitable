@@ -34,7 +34,7 @@ function Cart(props) {
 
     console.log(productData);
 
-    const Shipping=discount>0?10:15
+    let Shipping=discount>0?10:15
 
     const Subtotal = productData.reduce((acc, v) => acc + v.qty * v.price, 0)
     const totalDiscount = Subtotal * (discount / 100)
@@ -59,6 +59,7 @@ function Cart(props) {
     const handleCoupan = (data) => {
         console.log(data.coupan);
         let flag = 0;
+        let shipping =0
         coupan.coupan.map((v) => {
             if (v.coupan === data.coupan) {
                 console.log(v.coupan, data.coupan);
@@ -213,10 +214,7 @@ function Cart(props) {
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
                                         <p className="mb-0">${Subtotal}</p>
                                     </div>
-                                    <div className="d-flex justify-content-between mb-4">
-                                        <h5 className="mb-0 me-4">dicount:{discount}%</h5>
-                                        <p className="mb-0">{totalDiscount}</p>
-                                    </div>
+                                    
                                     <div className="d-flex justify-content-between">
                                         <h5 className="mb-0 me-4">Shipping</h5>
                                         <div className>
@@ -224,6 +222,10 @@ function Cart(props) {
                                         </div>
                                     </div>
                                     <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                    <div className="d-flex justify-content-between mb-4">
+                                        <h5 className="mb-0 me-4">dicount:{discount}%</h5>
+                                        <p className="mb-0">{totalDiscount}</p>
+                                    </div>
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>

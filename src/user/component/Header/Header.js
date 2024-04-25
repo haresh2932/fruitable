@@ -1,16 +1,29 @@
-import React from 'react';
+import { Box, IconButton } from '@mui/material';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { TheamContext } from '../../../context/TheamContext';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
 
 function Header(props) {
     const cart = useSelector(state => state.cart_slice)
     console.log(cart);
-    const totalCartQty=cart.cart.reduce(
+    const totalCartQty = cart.cart.reduce(
         (accumulator, currentValue) => accumulator + currentValue.qty,
         0,
     )
+    // console.log(totalCartQty);
 
-    console.log(totalCartQty);
+
+    const theamContext = useContext(TheamContext)
+    console.log(theamContext.theam);
+
+    const handleTheme = () => {
+        theamContext.toggleTheam(theamContext.theam)
+    }
+
 
     return (
         <div>
@@ -52,6 +65,8 @@ function Header(props) {
                                 <NavLink to='/contact' className="nav-item nav-link">Contact</NavLink>
                             </div>
                             <div className="d-flex m-3 me-0">
+                                <button onClick={handleTheme}>theam</button>
+                                
                                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>
                                 <a href="#" className="position-relative me-4 my-auto">
                                     <NavLink
