@@ -1,16 +1,27 @@
-import React from 'react';
+import { Box, IconButton } from '@mui/material';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { ThemeContext } from '../../../context/ThemeContext';
 
 function Header(props) {
     const cart = useSelector(state => state.cart_slice)
     console.log(cart);
-    const totalCartQty=cart.cart.reduce(
+    const totalCartQty = cart.cart.reduce(
         (accumulator, currentValue) => accumulator + currentValue.qty,
         0,
     )
 
     console.log(totalCartQty);
+
+    const themeContext = useContext(ThemeContext);
+    console.log(themeContext.theme);
+
+    const handleTheme = () => {
+        themeContext.toggleTheme(themeContext.theme);
+    };
 
     return (
         <div>
@@ -53,6 +64,32 @@ function Header(props) {
                             </div>
                             <div className="d-flex m-3 me-0">
                                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        width: "100%",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        bgcolor: "background.default",
+                                        color: "text.primary",
+                                        borderRadius: 1,
+                                        p: 3,
+                                    }}
+                                >
+                                    <IconButton
+                                        sx={{ ml: 1 }}
+                                        onClick={handleTheme}
+                                        color="inherit"
+                                    >
+                                        {themeContext.theme === "dark" ? (
+                                            <Brightness7Icon />
+                                        ) : (
+                                            <Brightness4Icon />
+                                        )}
+                                    </IconButton>
+                                </Box>
+
                                 <a href="#" className="position-relative me-4 my-auto">
                                     <NavLink
                                         to='/cart'

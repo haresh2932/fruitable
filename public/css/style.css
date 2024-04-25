@@ -502,3 +502,13 @@
 .success{
     color: green;
 }
+
+.dark {
+    background: white !important;
+    color: black !important;
+}
+
+.light {
+    background: black !important;
+    color: white !important;
+} 
