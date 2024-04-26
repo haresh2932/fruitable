@@ -1,10 +1,16 @@
+// import { ThemeContext } from '@emotion/react';
 import React from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../../../context/ThemeContext';
 
 function Footer(props) {
+    
+    const themeContext = useContext(ThemeContext);
+    console.log(themeContext.theme);
     return (
         <div>
             {/* Footer Start */}
-            <div className="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div className={`container-fluid bg-dark text-white-50 footer pt-5 mt-5 ${themeContext.theme==='dark'?'bg-dark':'bg-dark'}`}>
                 <div className="container py-5">
                     <div className="pb-4 mb-4" style={{ borderBottom: '1px solid rgba(226, 175, 24, 0.5)' }}>
                         <div className="row g-4">
@@ -76,7 +82,7 @@ function Footer(props) {
             </div>
             {/* Footer End */}
             {/* Copyright Start */}
-            <div className="container-fluid copyright bg-dark py-4">
+            <div className={`container-fluid copyright  py-4 ${themeContext.theme==='dark'?'bg-dark':'bg-dark'}`}>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">

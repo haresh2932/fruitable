@@ -503,12 +503,16 @@
     color: green;
 }
 
-.dark {
+.light {
     background: white !important;
     color: black !important;
 }
 
-.light {
+.dark {
     background: black !important;
     color: white !important;
 } 
+
+.bg-dm{
+    
+}

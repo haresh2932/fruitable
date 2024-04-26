@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
+import { ThemeContext } from '../../../context/ThemeContext';
 
 function Contact(props) {
+    const themeContext = useContext(ThemeContext);
     let contactSchema = object({
         name: string().required(),
         email: string().required().email(),
@@ -40,7 +42,7 @@ function Contact(props) {
             {/* Contact Start */}
             <div className="container-fluid contact py-5">
                 <div className="container py-5">
-                    <div className="p-5 bg-light rounded">
+                    <div className={`p-5  rounded ${themeContext.theme==='dark'?'bg-dark':'bg-light'}`}>
                         <div className="row g-4">
                             <div className="col-12">
                                 <div className="text-center mx-auto" style={{ maxWidth: 700 }}>

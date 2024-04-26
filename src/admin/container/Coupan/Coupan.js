@@ -48,7 +48,6 @@ function Coupan(props) {
     }
 
     const columns = [
-
         {
             field: 'coupan',
             headerName: ' Coupan Name',
@@ -110,7 +109,6 @@ function Coupan(props) {
             } else {
                 dispatch(addCoupan(values))
             }
-
             resetForm()
             handleClose();
         },
