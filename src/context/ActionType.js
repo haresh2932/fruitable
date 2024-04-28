@@ -1,1 +1,8 @@
 export const TOGGLE_THEME='TOGGLE_THEME'
+export const ADDINTRO='ADDINTRO'
+export const EDITINTRO='EDITINTRO'
+export const DELETEINTRO='DELETEINTRO'
+export const GETINTRO='TOGGLE_THEME'
+
+
+

@@ -240,5 +240,25 @@
       "percentage": "10",
       "expiry": "2024-05-05"
     }
+  ],
+  "crud": [
+    {
+      "id": "61c9",
+      "name": "HARESHKUMAR SAVJIBHAI GALTHARIYA",
+      "number": 5215444,
+      "country": "India"
+    },
+    {
+      "id": "e100",
+      "name": "HARESHKUMAR SAVJIBHAI GALTHARIYA",
+      "number": 99999,
+      "country": "India"
+    },
+    {
+      "id": "0015",
+      "name": "SANDIP KANUBHAI PARMAR",
+      "number": 88888,
+      "country": "India"
+    }
   ]
 }

@@ -14,7 +14,6 @@ export const ThemeProvider = ({ children }) => {
 
     const toggleTheme = () => {
         const newTheme = state.theme === "light" ? "dark" : "light";
-
         dispatch({ type: TOGGLE_THEME, payload: newTheme });
     };
 

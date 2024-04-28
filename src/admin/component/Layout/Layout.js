@@ -24,6 +24,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { NavLink } from 'react-router-dom';
 import StreamIcon from '@mui/icons-material/Stream';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import TableViewIcon from '@mui/icons-material/TableView';
 
 const drawerWidth = 240;
 
@@ -134,6 +135,11 @@ export default function Layout({ children }) {
             title: 'Coupan',
             icon: <AddCardIcon />,
             to: '/admin/coupan'
+        },
+        {
+            title: 'Crud',
+            icon: <TableViewIcon />,
+            to: '/admin/crud'
         }
     ]
 
