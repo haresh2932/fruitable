@@ -5,7 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { getCoupan } from '../../../redux/Slice/coupan.slice';
 import { useFormik } from 'formik';
 import { date, object, string } from 'yup';
-import { TextField } from '@mui/material';
+// import { TextField } from '@mui/material';
+import Button from '../Ui/Button/Button';
 
 function Cart(props) {
 
@@ -34,7 +35,7 @@ function Cart(props) {
 
     console.log(productData);
 
-    const Shipping=discount>0?10:15
+    const Shipping = discount > 0 ? 10 : 15
 
     const Subtotal = productData.reduce((acc, v) => acc + v.qty * v.price, 0)
     const totalDiscount = Subtotal * (discount / 100)
@@ -178,7 +179,7 @@ function Cart(props) {
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div className="mt-5">
                         <form onSubmit={handleSubmit}>
                             <input
@@ -229,7 +230,11 @@ function Cart(props) {
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
                                     <p className="mb-0 pe-4">${Total.toFixed(2)}</p>
                                 </div>
-                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                                <Button
+                                    disableBtn={true}
+                                >
+                                    Proceed Checkout
+                                </Button>
                             </div>
                         </div>
                     </div>

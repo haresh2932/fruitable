@@ -2,15 +2,16 @@
 import React from 'react';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
+import Button from '../../container/Ui/Button/Button';
 
 function Footer(props) {
-    
+
     const themeContext = useContext(ThemeContext);
     console.log(themeContext.theme);
     return (
         <div>
             {/* Footer Start */}
-            <div className={`container-fluid bg-dark text-white-50 footer pt-5 mt-5 ${themeContext.theme==='dark'?'bg-dark':'bg-dark'}`}>
+            <div className={`container-fluid bg-dark text-white-50 footer pt-5 mt-5 ${themeContext.theme === 'dark' ? 'bg-dark' : 'bg-dark'}`}>
                 <div className="container py-5">
                     <div className="pb-4 mb-4" style={{ borderBottom: '1px solid rgba(226, 175, 24, 0.5)' }}>
                         <div className="row g-4">
@@ -23,7 +24,12 @@ function Footer(props) {
                             <div className="col-lg-6">
                                 <div className="position-relative mx-auto">
                                     <input className="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number" placeholder="Your Email" />
-                                    <button type="submit" className="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style={{ top: 0, right: 0 }}>Subscribe Now</button>
+                                    <Button
+                                        type="submit"
+                                        btnType='Secondary'
+                                    >
+                                        Subscribe Now
+                                    </Button>
                                 </div>
                             </div>
                             <div className="col-lg-3">
@@ -82,7 +88,7 @@ function Footer(props) {
             </div>
             {/* Footer End */}
             {/* Copyright Start */}
-            <div className={`container-fluid copyright  py-4 ${themeContext.theme==='dark'?'bg-dark':'bg-dark'}`}>
+            <div className={`container-fluid copyright  py-4 ${themeContext.theme === 'dark' ? 'bg-dark' : 'bg-dark'}`}>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">

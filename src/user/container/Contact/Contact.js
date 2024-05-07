@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
 import { ThemeContext } from '../../../context/ThemeContext';
+import Input from '../Ui/Input/Input';
 
 function Contact(props) {
     const themeContext = useContext(ThemeContext);
@@ -57,7 +58,7 @@ function Contact(props) {
                             </div>
                             <div className="col-lg-7">
                                 <form onSubmit={handleSubmit}>
-                                    <input
+                                    <Input
                                         name='name'
                                         type="text"
                                         className="w-100 form-control border-0 py-3 "
@@ -65,11 +66,12 @@ function Contact(props) {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.name}
+                                        errorText={touched.name && errors.name?errors.name:''}
                                     />
-                                    <span className='error' >
+                                    {/* <span className='error' >
                                       {touched.name && errors.name?errors.name:''}                                          
-                                    </span>
-                                    <input
+                                    </span> */}
+                                    <Input
                                         name='email'
                                         type="email"
                                         className="w-100 form-control border-0 py-3 "
@@ -77,10 +79,12 @@ function Contact(props) {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
+                                        errorText= {touched.email && errors.email?errors.email:''}
+
                                     />
-                                    <span className='error' >
+                                    {/* <span className='error' >
                                       {touched.email && errors.email?errors.email:''}                                          
-                                    </span>
+                                    </span> */}
                                     <textarea
                                         name='message'
                                         className="w-100 form-control border-0 "
