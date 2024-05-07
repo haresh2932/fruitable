@@ -260,5 +260,13 @@
       "number": 88888,
       "country": "India"
     }
+  ],
+  "contact": [
+    {
+      "id": "b0fc",
+      "address": "83,vrajnandani-2,nansad,kamrej",
+      "email": "haresh2932@gmail.com",
+      "telephone": "09925983034"
+    }
   ]
 }

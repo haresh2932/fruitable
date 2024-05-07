@@ -25,6 +25,7 @@ import { NavLink } from 'react-router-dom';
 import StreamIcon from '@mui/icons-material/Stream';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import TableViewIcon from '@mui/icons-material/TableView';
+import PermPhoneMsgIcon from '@mui/icons-material/PermPhoneMsg';
 
 const drawerWidth = 240;
 
@@ -140,6 +141,11 @@ export default function Layout({ children }) {
             title: 'Crud',
             icon: <TableViewIcon />,
             to: '/admin/crud'
+        },
+        {
+            title: 'Contact',
+            icon: <PermPhoneMsgIcon />,
+            to: '/admin/contact'
         }
     ]
 

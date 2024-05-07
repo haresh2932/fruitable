@@ -10,6 +10,7 @@ import Product from '../admin/container/Product/Product';
 import Coupan from '../admin/container/Coupan/Coupan';
 import Crud from '../admin/container/Crud/Crud';
 import { CrudContext } from '../context/CrudContext';
+import Contact from '../admin/container/Contact/Contact';
 
 function AdminRoutes(props) {
     const crudContext = useContext(CrudContext)
@@ -25,6 +26,8 @@ function AdminRoutes(props) {
                     <Route exact path='/products' element={<Product />} />
                     <Route exact path='/coupan' element={<Coupan />} />
                     <Route exact path='/crud' element={<Crud />} />
+                    <Route exact path='/contact' element={<Contact />} />
+
                 </Routes>
             </Layout>
         </div>

@@ -806,7 +806,7 @@ function Home(props) {
             {/* Fact Start */}
             <div className="container-fluid py-5">
                 <div className="container">
-                    <div className={`p-5 rounded ${themeContext.theme}`}>
+                    <div className={`p-5 rounded ${themeContext.theme === 'dark'?'border border-warning' : 'bg-light'}`}>
                         <div className="row g-4 justify-content-center">
                             <div className="col-md-6 col-lg-6 col-xl-3">
                                 <div className={`counter ${themeContext.theme === 'dark' ? 'border border-warning' : 'bg-light'} rounded p-5`}>
