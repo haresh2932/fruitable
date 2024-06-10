@@ -14,12 +14,14 @@ export const getProducts = () => async(dispatch) => {
     
     try {
         dispatch(loadingProducts()) ;
-        await axios.get(BASE_URL + 'products')
+        await axios.get(BASE_URL + 'products/list-products')
             .then((response) => {
-                dispatch({ type: GET_PRODUCTS, payload: response.data })
+                console.log(response);
+                // dispatch({ type: GET_PRODUCTS, payload: response.data })
             })
             .catch((error) => {
-                dispatch(errorProducts(error.message));
+                console.log(error.message);
+                // dispatch(errorProducts(error.message));
             })
 
     } catch(error) {

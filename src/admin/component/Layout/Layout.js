@@ -111,14 +111,14 @@ export default function Layout({ children }) {
             to: '/admin/category'
         },
         {
-            title: 'Fruite',
+            title: 'subcategory',
             icon: <AppleIcon />,
-            to: '/admin/fruites'
+            to: '/admin/subcategory'
         },
         {
-            title: 'Vegitables',
+            title: 'product',
             icon: <KebabDiningIcon />,
-            to: '/admin/vegitables'
+            to: '/admin/products'
         },
         {
             title: 'Facilities',

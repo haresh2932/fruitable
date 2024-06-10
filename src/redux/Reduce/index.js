@@ -6,6 +6,8 @@ import { reviewReducer } from "./review.reducer";
 import { cartReducer } from "./cart.reducer";
 import cartSlice from "../Slice/cart.slice";
 import coupanSlice from "../Slice/coupan.slice";
+import { categoriesReducer } from "./category.reducer";
+import subcategorySlice from "../Slice/subcategory.slice";
 // import cartSlice from "../Slice/cart.slice";
 
 
@@ -15,7 +17,9 @@ export const rootreducers = combineReducers({
     products:productReducer,
     reviews:reviewReducer,
     cart_slice:cartSlice,
-    coupan:coupanSlice
+    coupan:coupanSlice,
+    categories:categoriesReducer,
+    subcategories:subcategorySlice
 });
 
 

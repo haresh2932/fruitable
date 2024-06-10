@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
@@ -12,29 +11,40 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton } from '@mui/material';
+import { FormControl, IconButton, InputLabel, MenuItem, NativeSelect, Select } from '@mui/material';
+import axios from 'axios';
+import { BASE_URL } from '../../../utils/utilis';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData, handleAdd, handleDelete, handleUpdateData } from '../../../redux/Action/category.action';
+import { getsubData, getsubcategoryData, handleAdd, handleRemove, handleUpdateData } from '../../../redux/Slice/subcategory.slice';
+import { getData } from '../../../redux/Action/category.action';
 
 
 
 
-export default function Category() {
+export default function Subcategory() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
     const [edit, setEdit] = React.useState(null)
-    const dispatch=useDispatch()
+    const dispatch=useDispatch();
+
     const categories=useSelector(state=>state.categories)
     console.log(categories.categories);
 
+    const subcategories=useSelector(state=>state.subcategories)
+    console.log(subcategories.subcategories);
+
     useEffect(() => {
         dispatch(getData())
+        dispatch(getsubcategoryData())
     }, [])
+    
 
-    const handleRemove=(id)=>{
-        console.log(id);
-        dispatch(handleDelete(id))
+    const handleDelete = async (id) => {
+
+        dispatch(handleRemove(id))
+
     }
+
     const handleEdit = (data) => {
         console.log(data);
         formik.setValues(data)
@@ -43,6 +53,17 @@ export default function Category() {
     }
 
     const columns = [
+        {
+            field: "category_id",
+            headerName: "Category Name",
+            width: 130,
+            renderCell : ({row}) => {
+                console.log(row);
+                const category = categories.categories.find(cat =>cat._id === row.category_id);
+                console.log(category);
+                return category ? category.name : '';
+            }
+        },
         {
             field: "name",
             headerName: "Name",
@@ -67,7 +88,7 @@ export default function Category() {
                     </IconButton>
 
                     <IconButton
-                        onClick={(event) => handleRemove(row._id)}
+                        onClick={(event) => handleDelete(row._id)}
                         variant="contained"
                     >
                         <DeleteIcon />
@@ -81,29 +102,27 @@ export default function Category() {
 
    
 
-   
-
-    let categorySchema = object({
+    let subcategorySchema = object({
+        category_id: string(),
         name: string().required(),
         description: string().required(),
 
     });
 
-
-
     const formik = useFormik({
         initialValues: {
+            category_id: '',
             name: '',
-            description: '',
+            description: ''
         },
-        validationSchema: categorySchema,
+        validationSchema: subcategorySchema,
         onSubmit: (values, { resetForm }) => {
             if (edit) {
-                console.log(values);
                 dispatch(handleUpdateData(values))
-            } else {
                 console.log(values);
+            } else {
                 dispatch(handleAdd(values));
+                console.log(values);
             }
             resetForm();
             handleClose();
@@ -111,7 +130,7 @@ export default function Category() {
 
     });
 
-    const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors ,setFieldValue} = formik;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -123,23 +142,48 @@ export default function Category() {
         setEdit(null)
     };
 
+    const changeSelect=(event)=>{
+        setFieldValue("category_id",event.target.value)
+    }
+
     return (
         <React.Fragment>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Add Category
+                Add Subcategory
             </Button>
             <Dialog
                 open={open}
                 onClose={handleClose}
             >
                 <form onSubmit={handleSubmit}>
-                    <DialogTitle>Category</DialogTitle>
+                    <DialogTitle>Subcategory</DialogTitle>
                     <DialogContent>
+                        <FormControl fullWidth variant="standard" margin="dense">
+                            <InputLabel id="category-label">Category</InputLabel>
+                            <Select
+                                labelId="category-label"
+                                id="category_id"
+                                name="category"
+                                value={values.category_id}
+                                onChange={changeSelect}
+                                onBlur={handleBlur}
+                                error={touched.category_id && errors.category_id ? true : false}
+                            >
+                                {categories.categories.map((category) => (
+                                    <MenuItem value={category._id}>
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {touched.category_id && errors.category_id ? (
+                                <div style={{ color: 'red', fontSize: '12px' }}>{errors.category_id}</div>
+                            ) : null}
+                        </FormControl>
                         <TextField
                             margin="dense"
                             id="name"
                             name="name"
-                            label="Enter category name"
+                            label="Enter Subcategory name"
                             type="text"
                             fullWidth
                             variant="standard"
@@ -174,7 +218,7 @@ export default function Category() {
             </Dialog>
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={categories.categories}
+                    rows={subcategories.subcategories}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -186,6 +230,8 @@ export default function Category() {
                     getRowId={row => row._id}
                 />
             </div>
-        </React.Fragment>
+        </React.Fragment >
     );
 }
+
+
