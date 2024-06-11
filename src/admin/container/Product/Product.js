@@ -9,39 +9,49 @@ import { number, object, string } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-import { addProducts, editProducts, removeProducts } from '../../../redux/Action/product.action';
+import { addProducts, editProducts, getProducts, removeProducts } from '../../../redux/Action/product.action';
 // import { getProduct } from '../../../redux/Action/product.action';
 import { ClimbingBoxLoader } from 'react-spinners';
 import { getData } from '../../../redux/Action/category.action';
 import { BASE_URL } from '../../../utils/utilis';
-import { getsubcategoryData } from '../../../redux/Slice/subcategory.slice';
+import { getsubData, getsubcategoryData } from '../../../redux/Slice/subcategory.slice';
 
 
 
 function Product(props) {
     const [open, setOpen] = React.useState(false);
     const [edit, setEdit] = useState(false)
-    // const [SubcategoryData,setSubcategoryData]=useState([])
+    const [getcategory,setCategory]=useState('')
     const [data, setData] = useState([]);
     const categories = useSelector(state => state.categories)
     console.log(categories.categories);
     const subcategories = useSelector(state => state.subcategories)
     console.log(subcategories.subcategories);
+    console.log(getcategory);
+    const categorydata=subcategories.subcategories.filter((v)=>v.category_id==getcategory)
+    console.log(categorydata);
+    const products= useSelector(state => state.products)
+    console.log(products.products.data);
+
+
+
+
+
 
     const dispatch = useDispatch()
-    const getProducts = async () => {
-        const response = await axios.get(BASE_URL + "products/list-products")
+    // const getProducts = async () => {
+    //     const response = await axios.get(BASE_URL + "products/list-products")
 
-        const data = response.data.data
+    //     const data = response.data.data
 
-        console.log(data);
-        setData(data)
-    }
+    //     console.log(data);
+    //     setData(data)
+    // }
 
     useEffect(() => {
         dispatch(getData())
-        dispatch(getsubcategoryData())
-        getProducts()
+        dispatch(getsubData())
+        dispatch(getProducts())
     }, [])
 
   
@@ -60,19 +70,25 @@ function Product(props) {
     const handleEdit = (data) => {
         console.log(data);
         formik.setValues(data)
-        setEdit(true)
+        setEdit(data._id)
         setOpen(true);
     }
 
     const handleDelete = async (data) => {
 
-    }
-    const addProducts = async (data) => {
 
     }
+    // const addProducts = async (data) => {
+    //     console.log(data);
+    //     const response=await axios.post(BASE_URL + 'products/add-product',data)
+    //     console.log(response);
+
+
+    // }
 
 
     const editProducts = (data) => {
+
 
     }
 
@@ -80,12 +96,21 @@ function Product(props) {
 
     const columns = [
         {
+            field: "category_id",
+            headerName: "Category Name",
+            width: 130,
+            renderCell: ({ row }) => {
+                const category = categories.categories.find(cat => cat._id === row.category_id);
+                return category ? category.name : '';
+            }
+        },
+        {
             field: "subcategory_id",
             headerName: "Subcategory Name",
             width: 130,
             renderCell: ({ row }) => {
-                // const subcategory = SubcategoryData.find(cat => cat._id === row.subcategory_id);
-                // return subcategory ? subcategory.name : '';
+                const subcategory = subcategories.subcategories.find(cat => cat._id === row.subcategory_id);
+                return subcategory ? subcategory.name : '';
             }
         },
         {
@@ -132,6 +157,7 @@ function Product(props) {
 
     const formik = useFormik({
         initialValues: {
+            category_id:'',
             subcategory_id: '',
             name: '',
             description: ''
@@ -142,7 +168,8 @@ function Product(props) {
                 console.log("yes", values);
                 // editProducts(values)
             } else {
-                // addProducts(values)
+                console.log(values); 
+                dispatch(addProducts(values))
             }
 
             resetForm()
@@ -153,8 +180,12 @@ function Product(props) {
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors, setFieldValue } = formik
     const changeSelect = (event) => {
-        setFieldValue("category_id", event.target.value)
+        setFieldValue("category_id", setCategory(event.target.value))
     }
+    const changeSubcategory = (event) => {
+        setFieldValue("subcategory_id", (event.target.value))
+    }
+
     return (
         <>
             {
@@ -167,7 +198,7 @@ function Product(props) {
                     </Button>
                     <Box sx={{ height: 400, width: '100%' }}>
                         <DataGrid
-                            rows={data}
+                            rows={products.products.data}
                             columns={columns}
                             initialState={{
                                 pagination: {
@@ -218,13 +249,14 @@ function Product(props) {
                                     id="subcategory_id"
                                     name="Subcategory"
                                     value={values.subcategory_id}
-                                    onChange={changeSelect}
+                                    onChange={changeSubcategory}
                                     onBlur={handleBlur}
                                     error={touched.subcategory_id && errors.subcategory_id ? true : false}
                                 >
-                                    {subcategories.subcategories.map((category) => (
-                                        <MenuItem value={category._id}>
-                                            {category.name}
+                                    {categorydata.map((subcategory) => (
+                        
+                                        <MenuItem value={subcategory._id}>
+                                            {subcategory.name}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -261,20 +293,7 @@ function Product(props) {
                                     error={touched.description && errors.description ? true : false}
                                     helperText={touched.description && errors.description ? errors.description : ''}
                                 />
-                                <TextField
-                                    margin="dense"
-                                    id="price"
-                                    name="price"
-                                    label="Price"
-                                    type="number"
-                                    fullWidth
-                                    variant="standard"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.price}
-                                    error={touched.price && errors.price ? true : false}
-                                    helperText={touched.price && errors.price ? errors.price : ''}
-                                />
+                               
                                 <DialogActions>
                                     <Button onClick={handleClose}>Cancel</Button>
                                     <Button type="submit">{edit ? 'Update' : 'Add'}</Button>

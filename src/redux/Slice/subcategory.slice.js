@@ -17,14 +17,7 @@ export const getsubData=createAsyncThunk(
     }
 )
 
-export const getsubcategoryData=createAsyncThunk(
-    'subcategory/get',
-    async()=>{
-        const response = await axios.get(BASE_URL + "subcategories/list-categories")
-        const data = response.data.data
-        return data        
-    }
-)
+
 
 
 

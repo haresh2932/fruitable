@@ -17,11 +17,11 @@ export const getProducts = () => async(dispatch) => {
         await axios.get(BASE_URL + 'products/list-products')
             .then((response) => {
                 console.log(response);
-                // dispatch({ type: GET_PRODUCTS, payload: response.data })
+                dispatch({ type: GET_PRODUCTS, payload: response.data })
             })
             .catch((error) => {
                 console.log(error.message);
-                // dispatch(errorProducts(error.message));
+                dispatch(errorProducts(error.message));
             })
 
     } catch(error) {
@@ -33,7 +33,7 @@ export const getProducts = () => async(dispatch) => {
 export const addProducts = (data) => async(dispatch) => {
     try {
         dispatch(loadingProducts()) ;
-        await axios.post(BASE_URL + 'products',data)
+        await axios.post(BASE_URL + 'products/add-product',data)
             .then((response) => dispatch({type:ADD_PRODUCTS,payload:response.data}))           
             .catch((error) => 
             dispatch(errorProducts(error.message))

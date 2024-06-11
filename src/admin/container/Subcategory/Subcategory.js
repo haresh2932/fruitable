@@ -15,7 +15,7 @@ import { FormControl, IconButton, InputLabel, MenuItem, NativeSelect, Select } f
 import axios from 'axios';
 import { BASE_URL } from '../../../utils/utilis';
 import { useDispatch, useSelector } from 'react-redux';
-import { getsubData, getsubcategoryData, handleAdd, handleRemove, handleUpdateData } from '../../../redux/Slice/subcategory.slice';
+import { getsubData, handleAdd, handleRemove, handleUpdateData } from '../../../redux/Slice/subcategory.slice';
 import { getData } from '../../../redux/Action/category.action';
 
 
@@ -25,19 +25,19 @@ export default function Subcategory() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
     const [edit, setEdit] = React.useState(null)
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
 
-    const categories=useSelector(state=>state.categories)
+    const categories = useSelector(state => state.categories)
     console.log(categories.categories);
 
-    const subcategories=useSelector(state=>state.subcategories)
-    console.log(subcategories.subcategories);
+    const subcategories = useSelector(state => state.subcategories)
+    console.log(subcategories);
 
     useEffect(() => {
         dispatch(getData())
-        dispatch(getsubcategoryData())
+        dispatch(getsubData())
+        
     }, [])
-    
 
     const handleDelete = async (id) => {
 
@@ -57,10 +57,9 @@ export default function Subcategory() {
             field: "category_id",
             headerName: "Category Name",
             width: 130,
-            renderCell : ({row}) => {
-                console.log(row);
-                const category = categories.categories.find(cat =>cat._id === row.category_id);
-                console.log(category);
+            renderCell: ({ row }) => {
+
+                const category = categories.categories.find(cat => cat._id === row.category_id);
                 return category ? category.name : '';
             }
         },
@@ -100,7 +99,7 @@ export default function Subcategory() {
 
     ];
 
-   
+
 
     let subcategorySchema = object({
         category_id: string(),
@@ -130,7 +129,7 @@ export default function Subcategory() {
 
     });
 
-    const { handleSubmit, handleChange, handleBlur, values, touched, errors ,setFieldValue} = formik;
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors, setFieldValue } = formik;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -142,8 +141,8 @@ export default function Subcategory() {
         setEdit(null)
     };
 
-    const changeSelect=(event)=>{
-        setFieldValue("category_id",event.target.value)
+    const changeSelect = (event) => {
+        setFieldValue("category_id", event.target.value)
     }
 
     return (
