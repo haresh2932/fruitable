@@ -30,19 +30,19 @@ export const productReducer = (state = initialState, action) => {
         case ADD_PRODUCTS:
             return {
                 isLoading: false,
-                products: state.products.concat(action.payload),
+                products: state.products.concat(action.payload.data),
                 error: null
             }
         case REMOVE_PRODUCTS:
             return {
                 isLoading: false,
-                products: state.products.filter((v) => v.id !== action.payload),
+                products: state.products.filter((v) => v._id !== action.payload),
                 error: null
             }
         case EDIT_PRODUCTS:
             return {
                 isLoading: false,
-                products: state.products.map((v) => v.id === action.payload.id ? action.payload : v),
+                products: state.products.map((v) => v._id === action.payload._id ? action.payload : v),
                 error: null
             }
 

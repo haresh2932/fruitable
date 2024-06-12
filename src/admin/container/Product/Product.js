@@ -21,22 +21,15 @@ import { getsubData, getsubcategoryData } from '../../../redux/Slice/subcategory
 function Product(props) {
     const [open, setOpen] = React.useState(false);
     const [edit, setEdit] = useState(false)
-    const [getcategory,setCategory]=useState('')
+    const [getcategory, setCategory] = useState([])
     const [data, setData] = useState([]);
     const categories = useSelector(state => state.categories)
     console.log(categories.categories);
     const subcategories = useSelector(state => state.subcategories)
-    console.log(subcategories.subcategories);
+    console.log(subcategories.subcategories)
     console.log(getcategory);
-    const categorydata=subcategories.subcategories.filter((v)=>v.category_id==getcategory)
-    console.log(categorydata);
-    const products= useSelector(state => state.products)
-    console.log(products.products.data);
-
-
-
-
-
+    const products = useSelector(state => state.products.products)
+    console.log(products);
 
     const dispatch = useDispatch()
     // const getProducts = async () => {
@@ -53,8 +46,6 @@ function Product(props) {
         dispatch(getsubData())
         dispatch(getProducts())
     }, [])
-
-  
 
 
     const handleClickOpen = () => {
@@ -74,25 +65,9 @@ function Product(props) {
         setOpen(true);
     }
 
-    const handleDelete = async (data) => {
-
-
+    const handleDelete = (id) => {
+        dispatch(removeProducts(id))
     }
-    // const addProducts = async (data) => {
-    //     console.log(data);
-    //     const response=await axios.post(BASE_URL + 'products/add-product',data)
-    //     console.log(response);
-
-
-    // }
-
-
-    const editProducts = (data) => {
-
-
-    }
-
-
 
     const columns = [
         {
@@ -100,7 +75,9 @@ function Product(props) {
             headerName: "Category Name",
             width: 130,
             renderCell: ({ row }) => {
-                const category = categories.categories.find(cat => cat._id === row.category_id);
+                console.log(row);
+                const category = categories.categories.find((v) => v._id == row.category_id);
+                console.log(category);
                 return category ? category.name : '';
             }
         },
@@ -137,7 +114,7 @@ function Product(props) {
                     </IconButton>
 
                     <IconButton
-                        onClick={() => handleDelete(row)}
+                        onClick={() => handleDelete(row._id)}
                         variant="contained"
                     >
                         <DeleteIcon />
@@ -148,6 +125,7 @@ function Product(props) {
     ];
 
     let productSchema = object({
+        category_id: string().required(),
         subcategory_id: string().required(),
         name: string().required(),
         description: string().required(),
@@ -157,7 +135,7 @@ function Product(props) {
 
     const formik = useFormik({
         initialValues: {
-            category_id:'',
+            category_id: '',
             subcategory_id: '',
             name: '',
             description: ''
@@ -166,12 +144,11 @@ function Product(props) {
         onSubmit: (values, { resetForm }) => {
             if (edit) {
                 console.log("yes", values);
-                // editProducts(values)
+                dispatch(editProducts(values))
             } else {
-                console.log(values); 
+                console.log(values);
                 dispatch(addProducts(values))
             }
-
             resetForm()
             handleClose();
         },
@@ -180,10 +157,13 @@ function Product(props) {
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors, setFieldValue } = formik
     const changeSelect = (event) => {
-        setFieldValue("category_id", setCategory(event.target.value))
+        setFieldValue("category_id", event.target.value)
+        setCategory(event.target.value)
     }
+
     const changeSubcategory = (event) => {
-        setFieldValue("subcategory_id", (event.target.value))
+        console.log(event.target.value);
+        setFieldValue("subcategory_id", event.target.value)
     }
 
     return (
@@ -198,7 +178,7 @@ function Product(props) {
                     </Button>
                     <Box sx={{ height: 400, width: '100%' }}>
                         <DataGrid
-                            rows={products.products.data}
+                            rows={products}
                             columns={columns}
                             initialState={{
                                 pagination: {
@@ -221,14 +201,14 @@ function Product(props) {
                     >
                         <form onSubmit={handleSubmit}>
                             <DialogTitle>Add Fruites</DialogTitle>
-                            <FormControl fullWidth variant="standard" margin="dense">
+                            <FormControl fullWidth>
                                 <InputLabel id="category-label">Category</InputLabel>
                                 <Select
                                     labelId="category-label"
                                     id="category_id"
                                     name="category"
                                     value={values.category_id}
-                                    onChange={changeSelect}
+                                    onChange={(event)=>changeSelect(event.target.value)}
                                     onBlur={handleBlur}
                                     error={touched.category_id && errors.category_id ? true : false}
                                 >
@@ -242,23 +222,27 @@ function Product(props) {
                                     <div style={{ color: 'red', fontSize: '12px' }}>{errors.category_id}</div>
                                 ) : null}
                             </FormControl>
-                            <FormControl fullWidth variant="standard" margin="dense">
-                                <InputLabel id="category-label">Subcategory</InputLabel>
+                            <br/><br/>
+                            <FormControl fullWidth>
+                                <InputLabel id="subcategory-label">Subcategory</InputLabel>
                                 <Select
-                                    labelId="category-label"
+                                    labelId="subcategory-label"
                                     id="subcategory_id"
-                                    name="Subcategory"
+                                    name="subcategory"
                                     value={values.subcategory_id}
-                                    onChange={changeSubcategory}
+                                    onChange={(e)=>changeSubcategory(e.target.value)}
                                     onBlur={handleBlur}
                                     error={touched.subcategory_id && errors.subcategory_id ? true : false}
                                 >
-                                    {categorydata.map((subcategory) => (
-                        
-                                        <MenuItem value={subcategory._id}>
-                                            {subcategory.name}
-                                        </MenuItem>
-                                    ))}
+                                    {subcategories.subcategories.map((v) => {
+                                        if (v.category_id == getcategory) {
+                                            console.log(v)
+                                            return <MenuItem value={v._id}>
+                                                {v.name}
+                                            </MenuItem>
+                                        }
+
+                                    })}
                                 </Select>
                                 {touched.subcategory_id && errors.subcategory_id ? (
                                     <div style={{ color: 'red', fontSize: '12px' }}>{errors.subcategory_id}</div>
@@ -293,7 +277,6 @@ function Product(props) {
                                     error={touched.description && errors.description ? true : false}
                                     helperText={touched.description && errors.description ? errors.description : ''}
                                 />
-                               
                                 <DialogActions>
                                     <Button onClick={handleClose}>Cancel</Button>
                                     <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
