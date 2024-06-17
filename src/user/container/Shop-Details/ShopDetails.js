@@ -3,19 +3,22 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import Review from "../Review/Review";
 import { addtocart, decreamentQty, increamentQty } from "../../../redux/Slice/cart.slice";
+import { getProducts } from "../../../redux/Action/product.action";
 
 
 function Shop_Details(props) {
   const [shopDetails, setShopDetails] = useState({});
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch()
-  const { id } = useParams();
+  const {id} = useParams();
+  console.log(id);
+  
 
-  const products = useSelector(state => state.products)
+  const products = useSelector(state => state.products.products)
   console.log(products);
 
-  const productData = products.products.find((v) => v.id === id)
-  console.log(productData);
+  const productData = products.find((v) => v._id === id)
+  console.log(productData.product_img.url);
 
 
   const cart = useSelector(state => state.cart_slice)
@@ -26,13 +29,14 @@ function Shop_Details(props) {
   try {
     useEffect(() => {
       getData();
+      dispatch(getProducts())
     }, []);
 
     const getData = async () => {
       const respons = await fetch("http://localhost:8000/products");
       const data = await respons.json();
 
-      const shopDetailsData = data.find((v) => v.id == id);
+      const shopDetailsData = data.find((v) => v._id == id);
 
       setShopDetails(shopDetailsData);
     };
@@ -83,7 +87,7 @@ function Shop_Details(props) {
                   <div className="border rounded">
                     <a href="#">
                       <img
-                        src={`../${productData?.image}`}
+                        src={productData.product_img.url}
                         className="img-fluid rounded"
                         alt="Image"
                       />

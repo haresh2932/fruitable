@@ -276,11 +276,11 @@ const handleProduct=(event,id)=>{
                   <div className="row g-4 justify-content-center">
                     {products.products.map((v, i) => (
                       <div className="col-md-6 col-lg-6 col-xl-4">
-                        <Link to={`/shop/${v.id}`}>
+                        <Link to={`/shop/${v._id}`}>
                           <div className="rounded position-relative fruite-item">
                             <div className="fruite-img">
                               <img
-                                src={v.image}
+                                src={v.product_img.url}
                                 className="img-fluid w-100 rounded-top"
                                 alt
                               />
@@ -301,7 +301,7 @@ const handleProduct=(event,id)=>{
                                 <a
                                   href="#"
                                   className="btn border border-secondary rounded-pill px-3 text-primary"
-                                  onClick={(event)=>handleProduct(event,v.id)}
+                                  onClick={(event)=>handleProduct(event,v._id)}
                                 >
                                   Add to cart
                                 </a>

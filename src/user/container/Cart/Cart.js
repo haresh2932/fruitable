@@ -6,6 +6,7 @@ import { getCoupan } from '../../../redux/Slice/coupan.slice';
 import { useFormik } from 'formik';
 import { date, object, string } from 'yup';
 import { TextField } from '@mui/material';
+import { getProducts } from '../../../redux/Action/product.action';
 
 function Cart(props) {
 
@@ -24,17 +25,18 @@ function Cart(props) {
 
     useEffect(() => {
         dispatch(getCoupan())
+        dispatch(getProducts())
     }, [])
 
     const productData = cart.cart.map((v) => {
-        const product = products.products.find((product) => product.id === v.pid)
-
+        const product = products.products.find((product) => product._id === v.pid)
+        console.log(product);
         return { ...product, qty: v.qty }
     })
 
     console.log(productData);
 
-    const Shipping=discount>0?10:15
+    const Shipping = discount > 0 ? 10 : 15
 
     const Subtotal = productData.reduce((acc, v) => acc + v.qty * v.price, 0)
     const totalDiscount = Subtotal * (discount / 100)
@@ -139,7 +141,7 @@ function Cart(props) {
                                     <tr>
                                         <th scope="row">
                                             <div className="d-flex align-items-center">
-                                                <img src={p.image} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
+                                                <img src={p.product_img.url} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
                                             </div>
                                         </th>
                                         <td>
@@ -178,7 +180,7 @@ function Cart(props) {
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div className="mt-5">
                         <form onSubmit={handleSubmit}>
                             <input
