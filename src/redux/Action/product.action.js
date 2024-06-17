@@ -32,10 +32,16 @@ export const getProducts = () => async (dispatch) => {
 }
 
 export const addProducts = (data) => async (dispatch) => {
+    console.log(data);
     try {
         dispatch(loadingProducts());
-        await axios.post(BASE_URL + 'products/add-product', data)
-            .then((response) => dispatch({ type: ADD_PRODUCTS, payload: response.data }))
+        await axios.post(BASE_URL + 'products/add-product', data,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        })
+        
+            .then((response) => dispatch({ type: ADD_PRODUCTS, payload: response.data}))
             .catch((error) =>
                 dispatch(errorProducts(error.message))
             )

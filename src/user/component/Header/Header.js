@@ -1,14 +1,27 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { getsubData } from '../../../redux/Slice/subcategory.slice';
+import { getData } from '../../../redux/Action/category.action';
 
 function Header(props) {
     const cart = useSelector(state => state.cart_slice)
     console.log(cart);
-    const totalCartQty=cart.cart.reduce(
+    const dispatch = useDispatch()
+    const totalCartQty = cart.cart.reduce(
         (accumulator, currentValue) => accumulator + currentValue.qty,
         0,
     )
+    const categories = useSelector(state => state.categories)
+    console.log(categories.categories);
+
+    const subcategories = useSelector(state => state.subcategories.subcategories)
+    console.log(subcategories);
+
+    useEffect(() => {
+        dispatch(getData())
+        dispatch(getsubData())
+    }, [])
 
     console.log(totalCartQty);
 

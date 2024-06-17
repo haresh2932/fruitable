@@ -5,7 +5,7 @@ import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { number, object, string } from 'yup';
+import { mixed, number, object, string } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
@@ -101,6 +101,15 @@ function Product(props) {
             width: 150,
         },
         {
+            field: 'product_img',
+            headerName: 'Image ',
+            width: 150,
+            renderCell: ({ row }) => (
+                // console.log(row.name)
+             <img src={row.product_img.url} width="50" height="50"  />
+            )
+        },
+        {
             field: "Action",
             headerName: "Action",
             width: 150,
@@ -129,7 +138,17 @@ function Product(props) {
         subcategory_id: string().required(),
         name: string().required(),
         description: string().required(),
-
+        product_img: mixed()
+            .required("Please select an image")
+            .test("fileSize", "The file is too large", (value) => {
+                console.log(value);
+                return value && value.size <= 2 * 1024 * 1024; // 2MB
+            })
+            .test("fileType", "Unsupported File Format", (value) => {
+                return (
+                    value && ["image/jpeg", "image/png", "image/gif"].includes(value.type)
+                );
+            }),
     });
 
 
@@ -137,6 +156,7 @@ function Product(props) {
         initialValues: {
             category_id: '',
             subcategory_id: '',
+            product_img: '',
             name: '',
             description: ''
         },
@@ -144,7 +164,7 @@ function Product(props) {
         onSubmit: (values, { resetForm }) => {
             if (edit) {
                 console.log("yes", values);
-                dispatch(editProducts(values))
+                // dispatch(editProducts(values))
             } else {
                 console.log(values);
                 dispatch(addProducts(values))
@@ -156,22 +176,23 @@ function Product(props) {
 
 
     const { handleBlur, handleChange, handleSubmit, values, touched, errors, setFieldValue } = formik
-    const changeSelect = (event) => {
-        setFieldValue("category_id", event.target.value)
-        setCategory(event.target.value)
+    const changeSelect = (id) => {
+        console.log(id);
+        setFieldValue("category_id", id)
+        setCategory(id)
     }
 
-    const changeSubcategory = (event) => {
-        console.log(event.target.value);
-        setFieldValue("subcategory_id", event.target.value)
+    const changeSubcategory = (id) => {
+        console.log(id);
+        setFieldValue("subcategory_id", id)
     }
 
     return (
         <>
             {
-                // products.isLoading ?
-                //     <ClimbingBoxLoader color="#36d7b7" /> :
-                //     products.error ? <p>{products.error}</p> :
+                products.isLoading ?
+                    <ClimbingBoxLoader color="#36d7b7" /> :
+                    products.error ? <p>{products.error}</p> :
                 <>
                     <Button variant="outlined" onClick={handleClickOpen} dir='rtl'>
                         Add Product
@@ -222,7 +243,7 @@ function Product(props) {
                                     <div style={{ color: 'red', fontSize: '12px' }}>{errors.category_id}</div>
                                 ) : null}
                             </FormControl>
-                            <br/><br/>
+                            <br /><br />
                             <FormControl fullWidth>
                                 <InputLabel id="subcategory-label">Subcategory</InputLabel>
                                 <Select
@@ -230,7 +251,7 @@ function Product(props) {
                                     id="subcategory_id"
                                     name="subcategory"
                                     value={values.subcategory_id}
-                                    onChange={(e)=>changeSubcategory(e.target.value)}
+                                    onChange={(e) => changeSubcategory(e.target.value)}
                                     onBlur={handleBlur}
                                     error={touched.subcategory_id && errors.subcategory_id ? true : false}
                                 >
@@ -277,6 +298,22 @@ function Product(props) {
                                     error={touched.description && errors.description ? true : false}
                                     helperText={touched.description && errors.description ? errors.description : ''}
                                 />
+                                <TextField
+                                    id="product_img"
+                                    name="product_img"
+                                    label="Image"
+                                    type="file"
+                                    fullWidth
+                                    variant="standard"
+                                    onChange={(event) => {
+                                        setFieldValue("product_img", event.currentTarget.files[0]);
+                                    }}
+                                    onBlur={handleBlur}
+                                    error={touched.product_img && Boolean(errors.product_img)}
+                                    helperText={touched.product_img && errors.product_img}
+                                    sx={{ marginBottom: 2 }}
+                                />
+                                <img />
                                 <DialogActions>
                                     <Button onClick={handleClose}>Cancel</Button>
                                     <Button type="submit">{edit ? 'Update' : 'Add'}</Button>
