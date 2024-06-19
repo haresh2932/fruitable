@@ -108,7 +108,7 @@ function Header(props) {
                                                 className="fa fa-shopping-bag fa-2x"
                                             />
                                         </NavLink>
-                                        <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{totalCartQty}</span>
+                                        {/* <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{totalCartQty}</span> */}
                                     </a>
                                     <a href="#" className="my-auto">
                                         <i className="fas fa-user fa-2x" />
@@ -158,12 +158,14 @@ function Header(props) {
                                 {subcategories
                                     .filter(subcategory => subcategory.category_id === selectedCategory._id)
                                     .map(subcategory => (
-                                        <MenuItem
+                                        <Button
                                             key={subcategory.id}
                                             onClick={(e) => handleSubcategoryClick(e, subcategory)}
+                                            anchorEl={subcategoryAnchorEl}
+                                            open
                                         >
                                             {subcategory.name}
-                                        </MenuItem>
+                                        </Button>
                                     ))}
                             </Menu>
                         </Box>
@@ -172,16 +174,19 @@ function Header(props) {
 
 
                 {selectedCategory && selectedSubcategory && (
-                    <Box sx={{ margin: '20px 10px' }}>
-                        <h3>{selectedSubcategory.name}</h3>
-                        {products
-                            .filter(v => v.subcategory_id === selectedSubcategory._id)
-                            .map(v => (
-                                <Box key={v._id} sx={{ margin: '10px 0' }}>
-                                    <h4>{v.name}</h4>
-                                </Box>
-                            ))}
-                    </Box>
+                    <>
+                        
+                        <Box sx={{ margin: '20px 10px' }}>
+                            <h3>{selectedSubcategory.name}</h3>
+                            {products
+                                .filter(v => v.subcategory_id === selectedSubcategory._id)
+                                .map(v => (
+                                    <Box key={v._id} sx={{ margin: '10px 0' }}>
+                                        <h4>{v.name}</h4>
+                                    </Box>
+                                ))}
+                        </Box>
+                    </>
                 )}
             </div>
         </div>

@@ -69,8 +69,7 @@ export const editProducts = (data) => async (dispatch) => {
         dispatch(loadingProducts());
         await axios.put(BASE_URL + 'products/update-product/' + data._id, data)
             console.log(data)
-            .then(dispatch({ type: EDIT_PRODUCTS, payload: data }))
-            .catch((error) => dispatch(errorProducts(error.message)))
+            dispatch({ type: EDIT_PRODUCTS, payload: data })
     } catch (error) {
         dispatch(errorProducts(error.message))
     }
