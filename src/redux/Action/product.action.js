@@ -17,7 +17,7 @@ export const getProducts = () => async (dispatch) => {
         await axios.get(BASE_URL + 'products/list-products')
             .then((response) => {
                 console.log(response)
-                dispatch({ type: GET_PRODUCTS, payload: response.data.data})
+                dispatch({ type: GET_PRODUCTS, payload: response.data.data })
             })
             .catch((error) => {
                 console.log(error.message);
@@ -35,13 +35,13 @@ export const addProducts = (data) => async (dispatch) => {
     console.log(data);
     try {
         dispatch(loadingProducts());
-        await axios.post(BASE_URL + 'products/add-product', data,{
-            headers:{
-                "Content-Type":"multipart/form-data"
+        await axios.post(BASE_URL + 'products/add-product', data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
         })
-        
-            .then((response) => dispatch({ type: ADD_PRODUCTS, payload: response.data}))
+
+            .then((response) => dispatch({ type: ADD_PRODUCTS, payload: response.data }))
             .catch((error) =>
                 dispatch(errorProducts(error.message))
             )
@@ -67,9 +67,13 @@ export const editProducts = (data) => async (dispatch) => {
     console.log(data);
     try {
         dispatch(loadingProducts());
-        await axios.put(BASE_URL + 'products/update-product/' + data._id, data)
-            console.log(data)
-            dispatch({ type: EDIT_PRODUCTS, payload: data })
+        const response=await axios.put(BASE_URL + 'products/update-product/' + data._id, data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        console.log(response)
+        dispatch({ type: EDIT_PRODUCTS, payload: response.data })
     } catch (error) {
         dispatch(errorProducts(error.message))
     }

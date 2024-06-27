@@ -40,9 +40,10 @@ export const productReducer = (state = initialState, action) => {
                 error: null
             }
         case EDIT_PRODUCTS:
+            console.log(action.payload);
             return {
                 isLoading: false,
-                products: state.products.map((v) => v._id === action.payload._id ? action.payload : v),
+                products: state.products.map((v) => v._id === action.payload.data._id ? action.payload.data : v),
                 error: null
             }
 
