@@ -24,6 +24,8 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { NavLink } from 'react-router-dom';
 import StreamIcon from '@mui/icons-material/Stream';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import SplitscreenIcon from '@mui/icons-material/Splitscreen';
+import GroupIcon from '@mui/icons-material/Group';
 
 const drawerWidth = 240;
 
@@ -134,6 +136,16 @@ export default function Layout({ children }) {
             title: 'Coupan',
             icon: <AddCardIcon />,
             to: '/admin/coupan'
+        },
+        {
+            title: 'Variants',
+            icon: <SplitscreenIcon />,
+            to: '/admin/variants'
+        },
+        {
+            title: 'Salespeople',
+            icon: <GroupIcon />,
+            to: '/admin/salespeople'
         }
     ]
 

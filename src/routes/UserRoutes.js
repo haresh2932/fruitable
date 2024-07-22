@@ -13,14 +13,18 @@ import Contact from '../user/container/Contact/Contact';
 import PrivateRoutes from './PrivateRoutes';
 import Counter from '../user/container/Counter/Counter';
 import Review from '../user/container/Review/Review';
+import UserLogin from '../user/container/Login/UserLogin';
+import UserRagister from '../user/container/Register/UserRagister';
 
 function UserRoutes(props) {
     return (
         <>
             <Header />
             <Routes>
+                <Route exact path='/register' element={<UserRagister />} />
+                <Route exact path='/login' element={<UserLogin />} />
                 <Route exact path='/' element={<Home />} />
-                <Route element={<PrivateRoutes/>}>
+                <Route element={<PrivateRoutes />}>
                     <Route exact path='/shop' element={<Shop />} />
                     <Route exact path='/shop/:id' element={<ShopDetails />} />
                     <Route exact path='/cart' element={<Cart />} />
@@ -29,8 +33,8 @@ function UserRoutes(props) {
                 <Route exact path='/testimonial' element={<Testimonial />} />
                 <Route exact path='/error' element={<Error />} />
                 <Route exact path='/contact' element={<Contact />} />
-                <Route exact path='/counter' element={<Counter/>} />
-                
+                <Route exact path='/counter' element={<Counter />} />
+
 
 
 

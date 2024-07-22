@@ -110,9 +110,9 @@ function Header(props) {
                                         </NavLink>
                                         {/* <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{totalCartQty}</span> */}
                                     </a>
-                                    <a href="#" className="my-auto">
+                                    <NavLink to='/login' className="my-auto">
                                         <i className="fas fa-user fa-2x" />
-                                    </a>
+                                    </NavLink>
                                 </div>
                             </div>
                         </nav>
@@ -175,7 +175,7 @@ function Header(props) {
 
                 {selectedCategory && selectedSubcategory && (
                     <>
-                        
+
                         <Box sx={{ margin: '20px 10px' }}>
                             <h3>{selectedSubcategory.name}</h3>
                             {products

@@ -40,9 +40,7 @@ export default function Subcategory() {
     }, [])
 
     const handleDelete = async (id) => {
-
         dispatch(handleRemove(id))
-
     }
 
     const handleEdit = (data) => {
