@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Box, IconButton, Menu, MenuItem } from '@mui/material';
-// import { ThemeContext } from '../../../context/ThemeContext';
+// import { ThemeContext } from '../../../context/ThemeContext';    
 import { Button } from 'reactstrap';
 // import { productdata } from '../../../reduct/action/Product.action';
 import { getsubData } from '../../../redux/Slice/subcategory.slice';
@@ -85,6 +85,8 @@ function Header(props) {
                                 <div className="navbar-nav mx-auto">
                                     <NavLink to='/' className="nav-item nav-link active">Home</NavLink>
                                     <NavLink to='/shop' className="nav-item nav-link">Shop</NavLink>
+                                    <NavLink to='/chat' className="nav-item nav-link">Chat</NavLink>
+
                                     <NavLink to='/shopDetails' className="nav-item nav-link">Shop Detail</NavLink>
                                     <div className="nav-item dropdown">
                                         <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>

@@ -15,6 +15,7 @@ import Counter from '../user/container/Counter/Counter';
 import Review from '../user/container/Review/Review';
 import UserLogin from '../user/container/Login/UserLogin';
 import UserRagister from '../user/container/Register/UserRagister';
+import Chat from '../user/container/Chat/Chat';
 
 function UserRoutes(props) {
     return (
@@ -34,6 +35,8 @@ function UserRoutes(props) {
                 <Route exact path='/error' element={<Error />} />
                 <Route exact path='/contact' element={<Contact />} />
                 <Route exact path='/counter' element={<Counter />} />
+                <Route exact path='/chat' element={<Chat />} />
+
 
 
 

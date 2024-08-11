@@ -43,11 +43,11 @@ function UserRagister(props) {
                     <div className="d-flex align-items-center mb-3">
                       <h3 className="font-weight-semi-bold">Register</h3>
                     </div>
-                    <form onSubmit={handleSubmit}>
+                    {/* <form onSubmit={handleSubmit}> */}
                       <div className="form-group">
                         <input
                           type="text"
-                          className="form-control bg-light border-0 p-4"
+                          className="form-control bg-light border-0 p-2"
                           placeholder="Name"
                           name="name"
                           value={name}
@@ -57,7 +57,7 @@ function UserRagister(props) {
                       <div className="form-group">
                         <input
                           type="email"
-                          className="form-control bg-light border-0 p-4"
+                          className="form-control bg-light border-0 p-2"
                           placeholder="Email Address"
                           name="email"
                           value={email}
@@ -67,7 +67,7 @@ function UserRagister(props) {
                       <div className="form-group">
                         <input
                           type="password"
-                          className="form-control bg-light border-0 p-4"
+                          className="form-control bg-light border-0 p-2"
                           placeholder="Password"
                           name="password"
                           value={password}
@@ -82,7 +82,7 @@ function UserRagister(props) {
                           Register
                         </button>
                       </div>
-                    </form>
+                    {/* </form> */}
                     <div className="d-flex align-items-center my-3">
                       <p className="mb-0">
                         Already have an Account?{" "}

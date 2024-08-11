@@ -10,7 +10,6 @@ import axios from 'axios';
 
 function Home(props) {
     const facilities = useSelector(state => state.facilities)
-
     const dispatch=useDispatch()
 
     // const [data, setData] = useState([])
