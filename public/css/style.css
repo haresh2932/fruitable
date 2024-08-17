@@ -502,3 +502,7 @@
 .success{
     color: green;
 }
+
+.link{
+    cursor: pointer;
+}

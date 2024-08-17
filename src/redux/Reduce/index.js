@@ -10,6 +10,8 @@ import { categoriesReducer } from "./category.reducer";
 import subcategorySlice from "../Slice/subcategory.slice";
 import variantSlice from "../Slice/variant.slice";
 import salespeopleSlice from "../Slice/salespeople.slice";
+import authSlice from "../Slice/auth.slice";
+import alertSlice from "../Slice/alert.slice";
 // import cartSlice from "../Slice/cart.slice";
 
 
@@ -23,7 +25,9 @@ export const rootreducers = combineReducers({
     categories:categoriesReducer,
     subcategories:subcategorySlice,
     variants:variantSlice,
-    salespeoples: salespeopleSlice
+    salespeoples: salespeopleSlice,
+    auth:authSlice,
+    alert:alertSlice
 });
 
 

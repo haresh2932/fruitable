@@ -10,6 +10,9 @@ import { Button } from 'reactstrap';
 import { getsubData } from '../../../redux/Slice/subcategory.slice';
 import { getData } from '../../../redux/Action/category.action';
 import { getProducts } from '../../../redux/Action/product.action';
+import { LogoutRounded } from '@mui/icons-material';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { logout } from '../../../redux/Slice/auth.slice';
 
 function Header(props) {
 
@@ -23,6 +26,12 @@ function Header(props) {
     const products = useSelector(state => state.products.products)
     console.log(products)
 
+    const { isAuthenticated, user } = useSelector(state => state.auth)
+    console.log(isAuthenticated);
+    
+    
+
+
     const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
     const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -35,7 +44,6 @@ function Header(props) {
         dispatch(getProducts())
 
     }, []);
-
 
 
     //   const handaltheme = () => {
@@ -57,6 +65,10 @@ function Header(props) {
         setSubcategoryAnchorEl(null);
     };
 
+    const handleLogout =()=>{
+        dispatch(logout(user._id))
+    }
+
     return (
         <div>
             <div>
@@ -77,7 +89,7 @@ function Header(props) {
                     </div>
                     <div className="container px-0">
                         <nav className="navbar navbar-light bg-white navbar-expand-xl">
-                            <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
+                            <NavLink to='/' className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></NavLink>
                             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                                 <span className="fa fa-bars text-primary" />
                             </button>
@@ -112,9 +124,14 @@ function Header(props) {
                                         </NavLink>
                                         {/* <span className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}>{totalCartQty}</span> */}
                                     </a>
-                                    <NavLink to='/login' className="my-auto">
-                                        <i className="fas fa-user fa-2x" />
-                                    </NavLink>
+
+                                    {
+                                        isAuthenticated ?
+                                            <button className='btn border border-secondary btn-md-square rounded-circle bg-white me-4' onClick={handleLogout}><LogoutIcon /></button>
+                                            : <NavLink to='/login' className="my-auto">
+                                                <i className="fas fa-user fa-2x" />
+                                            </NavLink>
+                                    }
                                 </div>
                             </div>
                         </nav>
@@ -143,7 +160,7 @@ function Header(props) {
             <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
             <div>
                 <Box sx={{ display: 'flex', padding: 2 }}>
-                    {categories.map(category => (
+                    {/* {categories.map(category => (
                         <Box key={category.id} sx={{ margin: '0 10px' }}>
                             <Button
                                 aria-controls="category-menu"
@@ -171,7 +188,7 @@ function Header(props) {
                                     ))}
                             </Menu>
                         </Box>
-                    ))}
+                    ))} */}
                 </Box>
 
 

@@ -1,10 +1,37 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { checkAuth } from '../redux/Slice/auth.slice';
+import { ClimbingBoxLoader } from 'react-spinners';
 
 function PrivateRoutes(props) {
-    const auth = true   
+    const [Loading, setLoading] = useState(true)
+    const { isAuthenticated } = useSelector(state => state.auth)
+    console.log(isAuthenticated);
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            try {
+                await dispatch(checkAuth())
+            } catch (error) {
+                navigate("/login")
+            } finally {
+                setLoading(false)
+            }
+        }
+        checkAuthentication()
+    }, [navigate, dispatch])
+
+    if (Loading) {
+        return <ClimbingBoxLoader color="#36d7b7" />
+    }
+
     return (
-        auth ? <Outlet/>:<Navigate to='/' replace />
+        isAuthenticated ? <Outlet /> : <Navigate to='/login' replace />
     );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../user/component/Header/Header';
 import { Route, Routes } from 'react-router-dom';
 import Footer from '../user/component/Footer/Footer';
@@ -13,17 +13,22 @@ import Contact from '../user/container/Contact/Contact';
 import PrivateRoutes from './PrivateRoutes';
 import Counter from '../user/container/Counter/Counter';
 import Review from '../user/container/Review/Review';
-import UserLogin from '../user/container/Login/UserLogin';
-import UserRagister from '../user/container/Register/UserRagister';
 import Chat from '../user/container/Chat/Chat';
+import Auth from '../user/container/Auth/Auth';
+import { useDispatch } from 'react-redux';
+import { checkAuth } from '../redux/Slice/auth.slice';
 
 function UserRoutes(props) {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(checkAuth())
+    },[])
     return (
         <>
             <Header />
             <Routes>
-                <Route exact path='/register' element={<UserRagister />} />
-                <Route exact path='/login' element={<UserLogin />} />
+                <Route exact path='/login' element={<Auth />} />
                 <Route exact path='/' element={<Home />} />
                 <Route element={<PrivateRoutes />}>
                     <Route exact path='/shop' element={<Shop />} />
