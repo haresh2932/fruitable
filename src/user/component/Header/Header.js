@@ -27,7 +27,7 @@ function Header(props) {
     console.log(products)
 
     const { isAuthenticated, user } = useSelector(state => state.auth)
-    console.log(isAuthenticated);
+    console.log(isAuthenticated,user);
     
     
 
