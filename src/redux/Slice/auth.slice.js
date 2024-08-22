@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 import { setAlert } from "./alert.slice";
-import Alert from "../../user/component/Alert/Alert";
+// import Alert from "../../user/component/Alert/Alert";
 
 
 const initialState = {
@@ -52,7 +52,9 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async (_id, { dispatch,rejectWithValue }) => {
         try {
-            const response = await axiosInstance.post('users/logout', { _id });
+
+            const id=localStorage.getItem("_id")            
+            const response = await axiosInstance.post('users/logout', { id });
             console.log(response);
 
             if (response.status === 200) {
