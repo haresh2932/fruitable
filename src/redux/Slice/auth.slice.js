@@ -40,7 +40,7 @@ export const login = createAsyncThunk(
                 return response.data
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return rejectWithValue('registration erorr.' + error.response.data.message)
         }
 
